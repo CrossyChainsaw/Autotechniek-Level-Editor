@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LoadSaveButtonClick : MonoBehaviour
+public class LoadSaveButton : MonoBehaviour
 {
     public Button loadSaveButtonClick;
     public List<GameObject> prefabList = new List<GameObject>();

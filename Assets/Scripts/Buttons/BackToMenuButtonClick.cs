@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class BackToMenuButtonClick : MonoBehaviour
 {
-	public Button backtomenuButton;
+	public Button backToMenuButton;
 	const string MENU_SCENE = "Menu";
 
 	void Start()
 	{
-		Button btn = backtomenuButton.GetComponent<Button>();
+		Button btn = backToMenuButton.GetComponent<Button>();
 		btn.onClick.AddListener(ButtonClick);
 	}
 

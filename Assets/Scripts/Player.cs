@@ -4,51 +4,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float moveSpeed;
     public Transform movePoint;
     public SpriteRenderer spriteRenderer;
     public LayerMask stopMovementLayer;
-    public LayerMask pinkBlockLayer;
-    public LayerMask greenBlockLayer;
     GameObject _drillItemSlot;
+    bool _hasDrill = false;
 
     private void Start()
     {
-        
         _drillItemSlot = GameObject.FindGameObjectWithTag("DrillItemSlot");
     }
     void Update()
     {
         Movement();
-
-        PinkBoxCollision();
-        GreenBoxCollision();
     }
 
     // Collision/Interaction
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Tool")
-        {
-            AddToInventory(col);
-        }
-    }
+        Item item = col.gameObject.GetComponent<Item>();
+        Debug.Log(item.prefabID);
 
-    private void PinkBoxCollision()
-    {
-        if (Physics2D.OverlapCircle(movePoint.position, float.MinValue, pinkBlockLayer))
+        if (item.collectable == true)
         {
-            for (int i = 0; i < 2; i++)
-            {
-                MoveForward();
-            }
+            AddDrillToInventoryVisualy(col);
+            AddDrillToInventory();
+            Destroy(col.gameObject);
         }
-    }
-    private void GreenBoxCollision()
-    {
-        if (Physics2D.OverlapCircle(movePoint.position, float.MinValue, greenBlockLayer))
+        else if (item.prefabID == (int)Items.Wheel && _hasDrill)
+        {
+            GameObject MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            MainCamera.transform.position = new Vector3(0, -1500, 10);
+            print("Activate Minigame");
+            DisableControls();
+        }
+        else if (item.prefabID == (int)Items.GreenBlock)
         {
             spriteRenderer.color = new Color(0, 255, 0, 255);
         }
@@ -56,14 +49,28 @@ public class PlayerController : MonoBehaviour
     /// <summary>Checks if player is on a drill item</summary>
 
     // Inventory
-    void AddToInventory(Collision2D col)
+    void AddDrillToInventoryVisualy(Collision2D col)
     {
         Debug.Log(col.gameObject.tag);
         var variableForPrefab = Resources.Load("prefabs/" + col.gameObject.tag) as GameObject;
         GameObject go = Instantiate(variableForPrefab, _drillItemSlot.transform);
         go.transform.localPosition = Vector3.zero;
     }
+    void AddDrillToInventory()
+    {
+        _hasDrill = true;
+    }
 
+
+    // Other
+    public void DisableControls()
+    {
+        GameModeManager.SetGamemode.Menu();
+    }
+    public void EnableControls()
+    {
+        GameModeManager.SetGamemode.Play();
+    }
 
     // Movement
     /// <summary>Moves the player in a direction using the arrow keys</summary>
@@ -78,7 +85,7 @@ public class PlayerController : MonoBehaviour
                 // Check if the space you try to move in contains an object with the layer "StopMovement" (Or what ever the variable stopMovementLayer has been assigned to)
                 if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(moveSpeed, 0f, 0f), float.MinValue, stopMovementLayer))
                 {
-                    MoveRight();
+                    MoveForward();
                 }
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
@@ -86,7 +93,7 @@ public class PlayerController : MonoBehaviour
                 FaceLeft();
                 if (!Physics2D.OverlapCircle(movePoint.position - new Vector3(moveSpeed, 0f, 0f), float.MinValue, stopMovementLayer))
                 {
-                    MoveLeft();
+                    MoveForward();
                 }
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
@@ -94,7 +101,7 @@ public class PlayerController : MonoBehaviour
                 FaceDown();
                 if (!Physics2D.OverlapCircle(movePoint.position - new Vector3(0f, moveSpeed, 0f), float.MinValue, stopMovementLayer))
                 {
-                    MoveDown();
+                    MoveForward();
                 }
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -102,7 +109,7 @@ public class PlayerController : MonoBehaviour
                 FaceUp();
                 if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, moveSpeed, 0f), float.MinValue, stopMovementLayer))
                 {
-                    MoveUp();
+                    MoveForward();
                 }
             }
         }
@@ -148,8 +155,6 @@ public class PlayerController : MonoBehaviour
             MoveLeft();
         }
     }
-
-
 
     // Directions
     /// <summary>Makes the player face up</summary>

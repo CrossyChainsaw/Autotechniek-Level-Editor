@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class PlayMode : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject MainCamera;
+    public GameObject Minigame1Camera;
+
     void Start()
     {
         GameModeManager.SetGamemode.Play();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

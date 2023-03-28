@@ -7,20 +7,11 @@ using UnityEngine;
 
 public class Data
 {
-    const string DATAFILE = "Editor.txt";
+    const string DATA_FILE = "Editor.txt";
     public static async Task Overwrite(List<(int id, int x, int y)> data)
     {
         string[] newData = TupleListToStringArray(data);
-        await File.WriteAllLinesAsync(DATAFILE, newData);
-    }
-    public static List<string> LoadAsStringList()
-    {
-        List<string> data = new List<string>();
-        foreach (string line in File.ReadLines(DATAFILE))
-        {
-            data.Add(line);
-        }
-        return data;
+        await File.WriteAllLinesAsync(DATA_FILE, newData);
     }
     public static List<(int id, int x, int y)> LoadAsTupleList()
     {
@@ -28,7 +19,7 @@ public class Data
         List<int> singleObjectData = new List<int>();
         int count = 0;
 
-        foreach (string line in System.IO.File.ReadLines(DATAFILE))
+        foreach (string line in System.IO.File.ReadLines(DATA_FILE))
         {
             Debug.Log(line);
             singleObjectData.Add(Convert.ToInt32(line));
@@ -53,5 +44,16 @@ public class Data
         }
         string[] dataFinal = dataInStringList.ToArray();
         return dataFinal;
+    }
+
+    // archived method
+    public static List<string> LoadAsStringList()
+    {
+        List<string> data = new List<string>();
+        foreach (string line in File.ReadLines(DATA_FILE))
+        {
+            data.Add(line);
+        }
+        return data;
     }
 }

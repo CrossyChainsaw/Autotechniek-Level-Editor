@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class SelectedItem : MonoBehaviour
 { 
-    static public GameObject selectedPrefab { get; set; }
+    static public GameObject SelectedPrefab { get; set; }
     static public bool Eraser { get; set; }
 }

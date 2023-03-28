@@ -4,7 +4,21 @@ using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
 
-// This class is pretty chaotic
+// This class is pretty chaotic, sorry
+
+enum Items
+{
+    Player = 0,
+    BlueBlock = 1,
+    GreenBlock = 2,
+    PinkBlock = 3,
+    Drill = 4,
+    Car = 5,
+    Wheel = 6,
+    Bolt = 7,
+    BoltHole = 8,
+    CrossSocketWrench = 9,
+}
 
 public class Item : MonoBehaviour
 {
@@ -31,13 +45,39 @@ public class Item : MonoBehaviour
     {
         if (prefab == null)
         {
+            // Minigame 1
+            if (prefabID == (int)Items.Bolt && Minigame1.currentTask == Minigame1Tasks.Task1)
+            {
+                this.gameObject.SetActive(false);
+                Minigame1.RemoveBolt();
+            }
+            else if (prefabID == (int)Items.Wheel && Minigame1.currentTask == Minigame1Tasks.Task2)
+            {
+                Minigame1.someRef = gameObject;
+                this.gameObject.SetActive(false);
+                Minigame1.RemoveWheel();
+            }
+            else if (prefabID == (int)Items.Wheel && Minigame1.currentTask == Minigame1Tasks.Task3)
+            {
+                GameObject gameObject = Minigame1.someRef;
+                gameObject.SetActive(true);
+                this.gameObject.SetActive(false);
+                Minigame1.PlaceWheel();
+            }
+            else if (prefabID == (int)Items.BoltHole && Minigame1.currentTask == Minigame1Tasks.Task4)
+            {
+                this.gameObject.SetActive(false);
+                Minigame1.PlaceBolt();
+            }
+
+            // Editor?
             if (SelectedItem.Eraser == true && GameModeManager.Gamemode == Gamemodes.Level_Editor)
             {
                 GameObject destroyedObject = gameObject;
                 Destroy(gameObject);
                 Debug.Log("Destroyed ig");
                 Item destroyedItem = destroyedObject.GetComponent<Item>();
-                List<(int id, int x, int y)> data = GetAllData();
+                List<(int id, int x, int y)> data = ReadDataFromTextFile();
 
                 (int id, int x, int y) removeThisEntry = (-1, -1, -1);
                 int i = 0;
@@ -56,14 +96,14 @@ public class Item : MonoBehaviour
         }
         else
         {
-            SelectedItem.selectedPrefab = prefab;
+            SelectedItem.SelectedPrefab = prefab;
             SelectedItem.Eraser = false;
             Debug.Log("Selected " + prefab.ToString());
         }
         Debug.Log("Clicked on " + prefab);
     }
 
-    List<(int id, int x, int y)> GetAllData()
+    List<(int id, int x, int y)> ReadDataFromTextFile()
     {
         List<(int id, int x, int y)> data = new List<(int id, int x, int y)>();
         List<int> dataParts = new List<int>();

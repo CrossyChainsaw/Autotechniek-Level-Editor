@@ -12,6 +12,9 @@ TagManager:
   - DrillItemSlot
   - Wall
   - Drill
+  - Wheel
+  - Minigame1Cam
+  - Minigame1
   layers:
   - Default
   - TransparentFX
@@ -19,9 +22,9 @@ TagManager:
   - StopMovement
   - Water
   - UI
-  - PinkBlockLayer
-  - GreenBlockLayer
-  - DrillLayer
+  - 
+  - 
+  - 
   - 
   - 
   - 

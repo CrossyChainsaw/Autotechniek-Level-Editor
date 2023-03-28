@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5861653438422162121}
   - component: {fileID: 5861653438422162118}
   - component: {fileID: -5115829462141191169}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Eraser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,3 +126,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabID: 3
   prefab: {fileID: 0}
+  collectable: 0
