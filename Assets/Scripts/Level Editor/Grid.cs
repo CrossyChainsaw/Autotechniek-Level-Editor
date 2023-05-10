@@ -6,6 +6,11 @@ using System;
 public class Grid : MonoBehaviour
 {
     int _tileSize = 100;
+    private UIItemCollection _uiItemCollection;
+    private void Start()
+    {
+        _uiItemCollection = GameObject.FindGameObjectWithTag("UIItemCollection").GetComponent<UIItemCollection>();
+    }
     public void OnMouseDown()
     {
         // get the mouse location in the game
@@ -17,17 +22,15 @@ public class Grid : MonoBehaviour
         double x = mousePosition.x;
         double y = mousePosition.y;
 
-        // get the center point of the grid tile you clicked in
-        x = Math.Floor(x / _tileSize) * _tileSize + 50;
-        y = Math.Floor(y / _tileSize) * _tileSize + 50;
+        // get the center point of the grid tile you clicked in // looks complicated but if you fill in tilesize as 100 it starts to make sense
+        x = Math.Floor(x / _tileSize) * _tileSize + (_tileSize / 2);
+        y = Math.Floor(y / _tileSize) * _tileSize + (_tileSize / 2);
         Debug.Log(x + ", " + y);
 
         Vector3 pos = new Vector3((float)x, (float)y, 0);
-        Quaternion rot = new Quaternion();
-        var gameobjectref = Instantiate(SelectedItem.SelectedPrefab, pos, rot);
-        Debug.Log(gameobjectref.GetComponent<Item>().prefabID.ToString());
-        //levelStorage.Instance.AddItem(gameobjectref);
+        Instantiate(_uiItemCollection.SelectedPrefab, pos, new Quaternion());
 
-        await SaveButtonClick.ExampleAsync(SelectedItem.SelectedPrefab, pos);
+        // autosave
+        await SaveButtonClick.ExampleAsync(_uiItemCollection.SelectedPrefab, pos);
     }
 }

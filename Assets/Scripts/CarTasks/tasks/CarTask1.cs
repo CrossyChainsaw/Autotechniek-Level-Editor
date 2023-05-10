@@ -2,18 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Minigame1
+public enum Minigame1Tasks
 {
+    Task1,
+    Task2,
+    Task3,
+    Task4,
+    Task5
+}
 
+public class CarTask1 : MonoBehaviour
+{
+    int nBolts = 5;
+    int nPreviousBolt = -1;
+    public Minigame1Tasks currentTask = Minigame1Tasks.Task1;
+    public GameObject mainWheel;
+    public bool firstBoltTask4 = true;
 
-    static int nBolts = 5;
-    static int nWheels = 1;
-    static int nPreviousBolt = -1;
-    public static Minigame1Tasks currentTask = Minigame1Tasks.Task1;
-    public static GameObject mainWheel;
-    public static bool firstBoltTask4 = true;
-
-    public static void RemoveBolt()
+    public void RemoveBolt()
     {
         nBolts--;
         if (nBolts == 0)
@@ -21,17 +27,15 @@ public static class Minigame1
             NextPhase();
         }
     }
-    public static void RemoveWheel()
+    public void RemoveWheel()
     {
-        nWheels--;
         NextPhase();
     }
-    public static void PlaceWheel()
+    public void PlaceWheel()
     {
-        nWheels++;
         NextPhase();
     }
-    public static void PlaceBolt()
+    public void PlaceBolt()
     {
         nBolts++;
         if (nBolts == 5)
@@ -39,42 +43,42 @@ public static class Minigame1
             NextPhase();
         }
     }
-    public static void NextPhase()
+    public void NextPhase()
     {
         int i = (int)currentTask;
         i++;
         currentTask = (Minigame1Tasks)i;
         Debug.Log(currentTask);
     }
-    public static void SwitchCamBackToGame()
+    public void SwitchCamBackToGame()
     {
         GameObject MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         MainCamera.transform.position = new Vector3(0, 0, -10);
         GameObject Inventory = GameObject.FindGameObjectWithTag("Inventory");
         Inventory.transform.position = new Vector3(850, 0, 2);
     }
-    static public void Minigame(int prefabID, GameObject gameObject)
+    public void Minigame_Item(int prefabID, GameObject gameObject)
     {
         UIItemCollection _uiItemCollection = GameObject.FindGameObjectWithTag("UIItemCollection").GetComponent<UIItemCollection>();
 
-        if (prefabID == (int)Items.Bolt && Minigame1.currentTask == Minigame1Tasks.Task1 && _uiItemCollection.SelectedItemType == Items.CrossSocketWrench)
+        if (prefabID == (int)Items.Bolt && currentTask == Minigame1Tasks.Task1 && _uiItemCollection.SelectedItemType == Items.CrossSocketWrench)
         {
             gameObject.SetActive(false);
             RemoveBolt();
         }
-        else if (prefabID == (int)Items.Wheel && Minigame1.currentTask == Minigame1Tasks.Task2)
+        else if (prefabID == (int)Items.Wheel && currentTask == Minigame1Tasks.Task2)
         {
             mainWheel = gameObject;
             gameObject.SetActive(false);
             RemoveWheel();
         }
-        else if (prefabID == (int)Items.Wheel && Minigame1.currentTask == Minigame1Tasks.Task3)
-        {
-            mainWheel.SetActive(true);
-            gameObject.SetActive(false);
-            PlaceWheel();
-        }
-        else if (prefabID == (int)Items.BoltHole && Minigame1.currentTask == Minigame1Tasks.Task4 && _uiItemCollection.SelectedItemType == Items.TorqueWrench)
+        //else if (prefabID == (int)Items.Wheel && Minigame1.currentTask == Minigame1Tasks.Task3)
+        //{
+        //    mainWheel.SetActive(true);
+        //    gameObject.SetActive(false);
+        //    PlaceWheel();
+        //}
+        else if (prefabID == (int)Items.BoltHole && currentTask == Minigame1Tasks.Task4 && _uiItemCollection.SelectedItemType == Items.TorqueWrench)
         {
             // bolthole id 8
             string currentBolt = gameObject.transform.parent.gameObject.tag;
@@ -103,7 +107,7 @@ public static class Minigame1
                 }
             }
         }
-        else if (Minigame1.currentTask == Minigame1Tasks.Task5)
+        else if (currentTask == Minigame1Tasks.Task5)
         {
             SwitchCamBackToGame();
             Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -114,7 +118,16 @@ public static class Minigame1
             Debug.Log(prefabID);
         }
     }
-    static public void Activate()
+    public void Minigame_UIItem(GameObject prefab, UIItem uiItem)
+    {
+        if (prefab.tag == "Wheel" && currentTask == Minigame1Tasks.Task3)
+        {
+            mainWheel.SetActive(true);
+            Destroy(uiItem.gameObject);
+            PlaceWheel();
+        }
+    }
+    public void Activate()
     {
         // move cam
         GameObject MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -128,7 +141,7 @@ public static class Minigame1
         // log
         Debug.Log("Activate Minigame");
     }
-    static bool KruisLinksBoltCheck(int nCurrentBolt, int nPreviousBolt)
+    bool KruisLinksBoltCheck(int nCurrentBolt, int nPreviousBolt)
     {
         if (System.Math.Abs(nCurrentBolt - nPreviousBolt) == 2 || System.Math.Abs(nCurrentBolt - nPreviousBolt) == 3)
         {
@@ -141,15 +154,3 @@ public static class Minigame1
     }
 
 }
-
-//1 3 5 2 4
-
-// slots 01234
-// if prevslot == 0 next next
-// [1, 2, 3, 4, 5]
-// 4 2 5 3 1
-
-// 1 3 5 2 4
-// 2 4 1 3 5
-// 3 5 2 4 1
-

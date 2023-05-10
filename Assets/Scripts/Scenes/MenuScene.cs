@@ -6,6 +6,6 @@ public class MenuScene : MonoBehaviour
 {
     void Start()
     {
-        GameModeManager.SetGamemode.Menu();
+        GameModeManager.SetGamemode(Gamemodes.Menu);
     }
 }

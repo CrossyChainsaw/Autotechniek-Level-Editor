@@ -6,6 +6,6 @@ public class LevelEditorScene : MonoBehaviour
 {
     void Start()
     {
-        GameModeManager.SetGamemode.Level_Editor();
+        GameModeManager.SetGamemode(Gamemodes.Level_Editor);
     }
 }

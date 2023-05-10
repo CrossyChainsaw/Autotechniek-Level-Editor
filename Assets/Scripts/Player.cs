@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,12 +11,15 @@ public class Player : MonoBehaviour
     public Transform movePoint;
     public SpriteRenderer spriteRenderer;
     public LayerMask stopMovementLayer;
-    GameObject _drillItemSlot;
-    bool _hasDrill = false;
+    Inventory _inventory;
+    GameObject _inventoryGrid;
+    List<CarTask> _taskList;
 
     private void Start()
     {
-        _drillItemSlot = GameObject.FindGameObjectWithTag("DrillItemSlot");
+        _inventory = new Inventory();
+        _inventoryGrid = GameObject.FindGameObjectWithTag("UIItemCollection");
+        _taskList = GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().CarTaskCollection.Tasks; // links CarTaskCollection Constructor with player
     }
     void Update()
     {
@@ -25,51 +29,50 @@ public class Player : MonoBehaviour
     // Collision/Interaction
     private void OnCollisionEnter2D(Collision2D col)
     {
-        Item item = col.gameObject.GetComponent<Item>();
-        Debug.Log(item.prefabID);
+        if (GameModeManager.Gamemode == Gamemodes.Play)
+        {
+            Item item = col.gameObject.GetComponent<Item>();
+            Debug.Log(item.itemType);
 
-        if (item.collectable == true)
-        {
-            AddDrillToInventoryVisualy(col);
-            AddDrillToInventory();
-            Destroy(col.gameObject);
-        }
-        else if (item.prefabID == (int)Items.Wheel && _hasDrill)
-        {
-            GameObject MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            MainCamera.transform.position = new Vector3(0, -1500, 10);
-            print("Activate Minigame");
-            DisableControls();
-        }
-        else if (item.prefabID == (int)Items.GreenBlock)
-        {
-            spriteRenderer.color = new Color(0, 255, 0, 255);
+            // Collect any collectable item
+            if (item.collectable == true)
+            {
+                _inventory.AddItem(_inventoryGrid, col, item.itemType);
+            }
+
+            // Wheel Col -> put inside wheel.cs? def not in player
+            else if (item.prefabID == (int)Items.Wheel)
+            {
+                if (_inventory.HasItem(_taskList[0].RequiredTools))
+                {
+                    new CarTask1().Activate();
+                    DisableControls();
+                }
+                else
+                {
+                    print("You didn't collect the required tools. Required Tools: Cross Socket Wrench, Torque Wrench");
+                }
+            }
         }
     }
-    /// <summary>Checks if player is on a drill item</summary>
 
     // Inventory
-    void AddDrillToInventoryVisualy(Collision2D col)
+    /// <summary>Removes a wheel from the player's inventory</summary>
+    public void UseWheel()
     {
-        Debug.Log(col.gameObject.tag);
-        var variableForPrefab = Resources.Load("prefabs/" + col.gameObject.tag) as GameObject;
-        GameObject go = Instantiate(variableForPrefab, _drillItemSlot.transform);
-        go.transform.localPosition = Vector3.zero;
-    }
-    void AddDrillToInventory()
-    {
-        _hasDrill = true;
+        _inventory.RemoveItem(Items.Wheel);
     }
 
-
-    // Other
+    // Controls
+    /// <summary>Disables the players controlls</summary>
     public void DisableControls()
     {
-        GameModeManager.SetGamemode.Menu();
+        GameModeManager.SetGamemode(Gamemodes.CarTask);
     }
+    /// <summary>Enables the players controlls</summary>
     public void EnableControls()
     {
-        GameModeManager.SetGamemode.Play();
+        GameModeManager.SetGamemode(Gamemodes.Play);
     }
 
     // Movement
@@ -115,27 +118,27 @@ public class Player : MonoBehaviour
         }
     }
 
-    /// <summary>Makes the player move up</summary>
+    /// <summary>Makes the player move up a tile</summary>
     void MoveUp()
     {
         movePoint.position += new Vector3(0f, moveSpeed, 0f);
     }
-    /// <summary>Makes the player move right</summary>
+    /// <summary>Makes the player move right a tile</summary>
     void MoveRight()
     {
         movePoint.position += new Vector3(moveSpeed, 0f, 0f);
     }
-    /// <summary>Makes the player move down</summary>
+    /// <summary>Makes the player move down a tile</summary>
     void MoveDown()
     {
         movePoint.position -= new Vector3(0f, moveSpeed, 0f);
     }
-    /// <summary>Makes the player move left</summary>
+    /// <summary>Makes the player move left a tile</summary>
     void MoveLeft()
     {
         movePoint.position -= new Vector3(moveSpeed, 0f, 0f);
     }
-    /// <summary>Makes the player move the direction it's facing</summary>
+    /// <summary>Makes the player move the direction it's facing a tile</summary>
     void MoveForward()
     {
         if (movePoint.rotation.z == 0)

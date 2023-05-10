@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Eraser : MonoBehaviour
 {
+    private UIItemCollection _uiItemCollection;
+    private void Start()
+    {
+        _uiItemCollection = GameObject.FindGameObjectWithTag("UIItemCollection").GetComponent<UIItemCollection>();
+    }
     public void OnMouseDown()
     {
-        SelectedItem.Eraser = true;
-        Debug.Log("Eraser True");
+        _uiItemCollection.SelectEraser();
     }
 }

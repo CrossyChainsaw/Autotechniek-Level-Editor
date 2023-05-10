@@ -33,6 +33,29 @@ public class Data
         }
         return data;
     }
+    public static List<(int id, int x, int y)> ReadDataFromTextFile()
+    {
+        List<(int id, int x, int y)> data = new List<(int id, int x, int y)>();
+        List<int> dataParts = new List<int>();
+        int count = 0;
+
+        foreach (string line in System.IO.File.ReadLines("Editor.txt"))
+        {
+            Debug.Log(line);
+            dataParts.Add(Convert.ToInt32(line));
+            count++;
+            if (count == 3)
+            {
+                data.Add((dataParts[0], dataParts[1], dataParts[2]));
+                dataParts.Clear();
+                count = 0;
+                // test this shit
+            }
+        }
+        Debug.Log(data[0]);
+        Debug.Log(data[1]);
+        return data;
+    }
     private static string[] TupleListToStringArray(List<(int id, int x, int y)> data)
     {
         List<string> dataInStringList = new List<string>();

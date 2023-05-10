@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayMode : MonoBehaviour
@@ -9,6 +10,6 @@ public class PlayMode : MonoBehaviour
 
     void Start()
     {
-        GameModeManager.SetGamemode.Play();
+        GameModeManager.SetGamemode(Gamemodes.Play);
     }
 }

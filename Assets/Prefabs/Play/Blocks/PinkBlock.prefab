@@ -125,5 +125,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabID: 3
-  prefab: {fileID: 0}
   collectable: 0
+  itemType: 3
+  UiClickable: 0

@@ -7,29 +7,17 @@ public enum Gamemodes
 {
     Menu,
     Level_Editor,
-    Play
+    Play,
+    CarTask // aka minigame
 }
 
-public class GameModeManager
+// heb dit static gemaakt omdat ik het wil gebruiken in alle scenes en data tijdelijk wil opslaan.
+// ik kan ook DontDestroyOnLoad gebruiken, dan blijft he object leven maar static voelt meer natuurlijk om hier te gebruiken
+public class GameModeManager 
 {
     public static Gamemodes Gamemode { get; private set; }
-    static void Set_Gamemode(Gamemodes g)
+    public static void SetGamemode(Gamemodes g)
     {
         Gamemode = g;
-    }
-    public static class SetGamemode
-    {
-        public static void Play()
-        {
-            Set_Gamemode(Gamemodes.Play);
-        }
-        public static void Menu()
-        {
-            Set_Gamemode(Gamemodes.Menu);
-        }
-        public static void Level_Editor()
-        {
-            Set_Gamemode(Gamemodes.Level_Editor);
-        }
     }
 }
