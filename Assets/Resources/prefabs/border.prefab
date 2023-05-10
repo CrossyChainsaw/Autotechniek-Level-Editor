@@ -103,10 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007ba4f1ef7455d48aae58ebf1db21e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabID: 10
-  prefab: {fileID: 4473645201323808584}
-  collectable: 1
-  itemType: 10
+  Collectable: 0
+  ItemType: -1
 --- !u!114 &-5128920812374965471
 MonoBehaviour:
   m_ObjectHideFlags: 0

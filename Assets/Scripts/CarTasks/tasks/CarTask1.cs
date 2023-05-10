@@ -72,12 +72,6 @@ public class CarTask1 : MonoBehaviour
             gameObject.SetActive(false);
             RemoveWheel();
         }
-        //else if (prefabID == (int)Items.Wheel && Minigame1.currentTask == Minigame1Tasks.Task3)
-        //{
-        //    mainWheel.SetActive(true);
-        //    gameObject.SetActive(false);
-        //    PlaceWheel();
-        //}
         else if (prefabID == (int)Items.BoltHole && currentTask == Minigame1Tasks.Task4 && _uiItemCollection.SelectedItemType == Items.TorqueWrench)
         {
             // bolthole id 8

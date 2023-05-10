@@ -18,9 +18,9 @@ public class LoadTasks : MonoBehaviour
     void LoadInFirstTask()
     {
         TextMeshProUGUI TaskName = GameObject.FindGameObjectWithTag("TaskName").GetComponent<TextMeshProUGUI>();
-        TaskName.text = CarTaskCollection.Tasks[0].Name;
+        TaskName.text = CarTaskCollection.AllTasks[0].Name;
         TextMeshProUGUI TaskDescription = GameObject.FindGameObjectWithTag("TaskDescription").GetComponent<TextMeshProUGUI>();
-        TaskDescription.text = CarTaskCollection.Tasks[0].Description;
+        TaskDescription.text = CarTaskCollection.AllTasks[0].Description;
         TextMeshProUGUI TaskTips = GameObject.FindGameObjectWithTag("TaskTips").GetComponent<TextMeshProUGUI>();
         TaskTips.text = "placeholder";
     }

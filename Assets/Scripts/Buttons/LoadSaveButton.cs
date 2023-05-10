@@ -28,7 +28,10 @@ public class LoadSaveButton : MonoBehaviour
         List<(int id, int x, int y)> data = Data.LoadAsTupleList();
         while (data.Count > 0)
         {
+            Debug.Log("Finding Prefab by ID");
             GameObject prefab = FindPrefabByID(data[0].id);
+            Debug.Log("Found ID: " + data[0].id);
+            Debug.Log("Found prefab: " + prefab);
             Vector3 pos = new Vector3(data[0].x, data[0].y);
             Instantiate(prefab, pos, new Quaternion());
             data.RemoveAt(0);
@@ -36,10 +39,14 @@ public class LoadSaveButton : MonoBehaviour
     }
     GameObject FindPrefabByID(int id)
     {
+        Debug.Log("PrefabList[0]: " + prefabList[0]);
+        Debug.Log("PrefabList[1]: " + prefabList[1]);
         GameObject correctPrefab = null;
         foreach (GameObject prefab in prefabList)
         {
-            if (prefab.GetComponent<Item>().prefabID == id)
+            int prefabID = prefab.GetComponent<Item>().PrefabID;
+            Debug.Log(prefabID + ", " + id);
+            if (prefabID == id)
             {
                 correctPrefab = prefab;
                 break; // if this method fucks up, remove this line

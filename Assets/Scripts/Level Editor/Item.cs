@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 // This class is pretty chaotic, sorry
 
+// I've put the Dutch names of tools next to it since you will encounter them in strings in the application
 public enum Items
 {
     None = -1,
@@ -13,21 +14,23 @@ public enum Items
     BlueBlock = 1,
     GreenBlock = 2,
     PinkBlock = 3,
-    Drill = 4,
-    Car = 5,
-    Wheel = 6,
-    Bolt = 7,
-    BoltHole = 8,
-    CrossSocketWrench = 9,
-    TorqueWrench = 10,
+    Drill = 4, // Boor
+    Car = 5, // Auto
+    Wheel = 6, // Wiel
+    Bolt = 7, // Schroef
+    BoltHole = 8, // Gat zonder schroef
+    CrossSocketWrench = 9, // Kruissleutel
+    TorqueWrench = 10, // Moment Sleutel
+    EngineHood = 11, // Motor Kap
+    CarBattery = 12, // Accu
+    Wrench = 13, // Steek Sleutel
 }
 
 public class Item : MonoBehaviour
 {
-    public int prefabID;
-    //public GameObject prefab;
-    public bool collectable;
-    public Items itemType;
+    public int PrefabID { get { return (int)ItemType; } }
+    public bool Collectable; // WARNING - since this property is assigned inside unity it will take a very longtime to re-assign everything, so try not to rename this property
+    public Items ItemType; // WARNING - since this property is assigned inside unity it will take a very longtime to re-assign everything, so try not to rename this property
     UIItemCollection _uiItemCollection;
     CarTask1 _carTask1;
 
@@ -39,7 +42,7 @@ public class Item : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Player" && collectable == true && GameModeManager.Gamemode == Gamemodes.Play)
+        if (col.gameObject.tag == "Player" && Collectable == true && GameModeManager.Gamemode == Gamemodes.Play)
         {
             Destroy(this.gameObject);
         }
@@ -48,7 +51,7 @@ public class Item : MonoBehaviour
     {
         if (GameModeManager.Gamemode == Gamemodes.CarTask)
         {
-            _carTask1.Minigame_Item(prefabID, this.gameObject);
+            _carTask1.Minigame_Item(PrefabID, this.gameObject);
         }
 
         // Eraser?
@@ -64,7 +67,7 @@ public class Item : MonoBehaviour
             int i = 0;
             foreach ((int id, int x, int y) entry in data)
             {
-                if (entry.id == destroyedItem.prefabID && entry.x == destroyedObject.transform.position.x && entry.y == destroyedObject.transform.position.y)
+                if (entry.id == destroyedItem.PrefabID && entry.x == destroyedObject.transform.position.x && entry.y == destroyedObject.transform.position.y)
                 {
                     removeThisEntry = entry;
                     break;
@@ -79,7 +82,7 @@ public class Item : MonoBehaviour
             Debug.Log("Eraser: " + _uiItemCollection.EraserSelected);
             Debug.Log("Gamemode: " + GameModeManager.Gamemode);
         }
-        Debug.Log("Clicked on " + itemType);
+        Debug.Log("Clicked on " + ItemType);
     }
 }
 

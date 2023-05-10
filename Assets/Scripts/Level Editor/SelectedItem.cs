@@ -21,7 +21,7 @@ public class SelectedItem : MonoBehaviour
         //_previousUIItem = _currentUIItem;
 
         Debug.Log("Selected: " + prefab.ToString());
-        Debug.Log(prefab.GetComponent<Item>().itemType);
+        Debug.Log(prefab.GetComponent<Item>().ItemType);
     }
     public static void SelectEraser()
     {

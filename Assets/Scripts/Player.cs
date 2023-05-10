@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     {
         _inventory = new Inventory();
         _inventoryGrid = GameObject.FindGameObjectWithTag("UIItemCollection");
-        _taskList = GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().CarTaskCollection.Tasks; // links CarTaskCollection Constructor with player
+        _taskList = GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().CarTaskCollection.AllTasks; // links CarTaskCollection Constructor with player
     }
     void Update()
     {
@@ -32,16 +32,16 @@ public class Player : MonoBehaviour
         if (GameModeManager.Gamemode == Gamemodes.Play)
         {
             Item item = col.gameObject.GetComponent<Item>();
-            Debug.Log(item.itemType);
+            Debug.Log(item.ItemType);
 
             // Collect any collectable item
-            if (item.collectable == true)
+            if (item.Collectable == true)
             {
-                _inventory.AddItem(_inventoryGrid, col, item.itemType);
+                _inventory.AddItem(_inventoryGrid, col, item.ItemType);
             }
 
             // Wheel Col -> put inside wheel.cs? def not in player
-            else if (item.prefabID == (int)Items.Wheel)
+            else if (item.PrefabID == (int)Items.Wheel)
             {
                 if (_inventory.HasItem(_taskList[0].RequiredTools))
                 {

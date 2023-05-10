@@ -9,11 +9,10 @@ public class CarTask
     public Items StartItem { get; private set; }
     public string Description { get; private set; }
     /// <summary>If you try to interact with the correct part of the car but you don't have all the necessary tools, it will tell you</summary>
-    public string InteractFeedback { get; private set; }
     public Items[] RequiredTools { get; private set; }
 
 
-    public CarTask(string name, Items startItem, string description, string interactFeedback, params Items[] itemArray)
+    public CarTask(string name, Items startItem, string description, params Items[] itemArray)
     {
         Name = name;
         Description = description;

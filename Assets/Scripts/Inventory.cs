@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
         itemSlot_BoxCollider2D.offset = new Vector2(0, 0);
         itemSlot_BoxCollider2D.size = new Vector2(100, 100);
         // prefab object
-        Items itemType = col.gameObject.GetComponent<Item>().itemType;
+        Items itemType = col.gameObject.GetComponent<Item>().ItemType;
         GameObject prefab = Resources.Load("prefabs/" + itemType.ToString()) as GameObject;
         GameObject objectWithPrefab = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
         objectWithPrefab.transform.parent = itemSlot.transform;
