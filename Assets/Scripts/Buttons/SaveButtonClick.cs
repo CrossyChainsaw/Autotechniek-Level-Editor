@@ -25,8 +25,8 @@ public class SaveButtonClick : MonoBehaviour
 
 	public static async Task ExampleAsync(GameObject gameObject, Vector3 pos) // shit works damn
 	{
-		using StreamWriter file = new("Editor.txt", append: true);
-		await file.WriteLineAsync(gameObject.GetComponent<Item>().prefabID.ToString());
+		using StreamWriter file = new(Data.GridData.DATA_FILE_GRID, append: true);
+		await file.WriteLineAsync(gameObject.GetComponent<Item>().PrefabID.ToString());
 		await file.WriteLineAsync(pos.x.ToString());
 		await file.WriteLineAsync(pos.y.ToString());
 	}

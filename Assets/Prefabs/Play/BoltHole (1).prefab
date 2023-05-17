@@ -147,9 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007ba4f1ef7455d48aae58ebf1db21e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabID: 8
-  prefab: {fileID: 0}
-  collectable: 0
+  Collectable: 0
+  ItemType: 8
 --- !u!114 &7398123852749235058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,4 +161,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff44bce3c2e6a564a9c5befa5d5e70b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsRemoved: 0
+  isRemoved: 0

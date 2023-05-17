@@ -11,15 +11,14 @@ public class Player : MonoBehaviour
     public Transform movePoint;
     public SpriteRenderer spriteRenderer;
     public LayerMask stopMovementLayer;
+    public List<CarTask> TaskList { get; private set; }
     Inventory _inventory;
-    GameObject _inventoryGrid;
-    List<CarTask> _taskList;
 
     private void Start()
     {
         _inventory = new Inventory();
-        _inventoryGrid = GameObject.FindGameObjectWithTag("UIItemCollection");
-        _taskList = GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().CarTaskCollection.Tasks; // links CarTaskCollection Constructor with player
+        TaskList = Data.CarTaskData.LoadCarTasksFromTextFile();
+        //TaskList = GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().CarTaskCollection.AllTasks; // links CarTaskCollection Constructor with player
     }
     void Update()
     {
@@ -32,44 +31,80 @@ public class Player : MonoBehaviour
         if (GameModeManager.Gamemode == Gamemodes.Play)
         {
             Item item = col.gameObject.GetComponent<Item>();
-            Debug.Log(item.itemType);
+            Debug.Log(item.ItemType);
 
             // Collect any collectable item
-            if (item.collectable == true)
+            if (item.Collectable == true)
             {
-                _inventory.AddItem(_inventoryGrid, col, item.itemType);
+                _inventory.AddItem(item);
             }
-
-            // Wheel Col -> put inside wheel.cs? def not in player
-            else if (item.prefabID == (int)Items.Wheel)
+            else if (item.ItemType == Items.Wheel)
             {
-                if (_inventory.HasItem(_taskList[0].RequiredTools))
+                if (_inventory.HasItem(TaskList[0].RequiredTools))
                 {
-                    new CarTask1().Activate();
+                    ((CarTask1)TaskList[0]).Activate();
                     DisableControls();
                 }
                 else
                 {
-                    print("You didn't collect the required tools. Required Tools: Cross Socket Wrench, Torque Wrench");
+                    PrintRequiredTools();
                 }
+            }
+            else if (item.ItemType == Items.EngineHood)
+            {
+                if (_inventory.HasItem(TaskList[0].RequiredTools))
+                {
+                    ((CarTask2)TaskList[0]).Activate();
+                    DisableControls();
+                }
+                else
+                {
+                    PrintRequiredTools();
+                }
+            }
+            // foreach task // if you have required items activate // else print req tools
+        }
+    }
+    public void FinishCurrentTask()
+    {
+        // switch back cam
+        GameObject MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        MainCamera.transform.position = new Vector3(0, 0, -10);
+        GameObject Inventory = GameObject.FindGameObjectWithTag("Inventory");
+        Inventory.transform.position = new Vector3(835, 0, 2);
+        Debug.Log(7);
+        // remove task
+        TaskList.Remove(TaskList[0]);
+        Debug.Log(7);
+        // load in next task
+        GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().LoadInTask(TaskList[0]);
+        Debug.Log(7);
+        EnableControls();
+    }
+    void PrintRequiredTools()
+    {
+        print("You didn't collect the required tools. Required Tools: ");
+        foreach (var item in TaskList[0].RequiredTools)
+        {
+            if (!_inventory.ItemList.Contains(item))
+            {
+                Debug.Log(item);
             }
         }
     }
 
     // Inventory
     /// <summary>Removes a wheel from the player's inventory</summary>
-    public void UseWheel()
+    public void UseItem(Items item)
     {
-        _inventory.RemoveItem(Items.Wheel);
+        _inventory.RemoveItem(item);
     }
 
     // Controls
-    /// <summary>Disables the players controlls</summary>
     public void DisableControls()
     {
         GameModeManager.SetGamemode(Gamemodes.CarTask);
     }
-    /// <summary>Enables the players controlls</summary>
     public void EnableControls()
     {
         GameModeManager.SetGamemode(Gamemodes.Play);
@@ -79,6 +114,7 @@ public class Player : MonoBehaviour
     /// <summary>Moves the player in a direction using the arrow keys</summary>
     void Movement()
     {
+        Debug.Log(GameModeManager.Gamemode);
         // only enable movement inside play mode
         if (GameModeManager.Gamemode == Gamemodes.Play)
         {
@@ -117,23 +153,18 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-    /// <summary>Makes the player move up a tile</summary>
     void MoveUp()
     {
         movePoint.position += new Vector3(0f, moveSpeed, 0f);
     }
-    /// <summary>Makes the player move right a tile</summary>
     void MoveRight()
     {
         movePoint.position += new Vector3(moveSpeed, 0f, 0f);
     }
-    /// <summary>Makes the player move down a tile</summary>
     void MoveDown()
     {
         movePoint.position -= new Vector3(0f, moveSpeed, 0f);
     }
-    /// <summary>Makes the player move left a tile</summary>
     void MoveLeft()
     {
         movePoint.position -= new Vector3(moveSpeed, 0f, 0f);
@@ -160,22 +191,18 @@ public class Player : MonoBehaviour
     }
 
     // Directions
-    /// <summary>Makes the player face up</summary>
     void FaceUp()
     {
         movePoint.rotation = Quaternion.Euler(movePoint.rotation.x, movePoint.rotation.y, 0f);
     }
-    /// <summary>Makes the player face right</summary>
     void FaceRight()
     {
         movePoint.rotation = Quaternion.Euler(movePoint.rotation.x, movePoint.rotation.y, 270f);
     }
-    /// <summary>Makes the player face down</summary>
     void FaceDown()
     {
         movePoint.rotation = Quaternion.Euler(movePoint.rotation.x, movePoint.rotation.y, 180f);
     }
-    /// <summary>Makes the player face left</summary>
     void FaceLeft()
     {
         movePoint.rotation = Quaternion.Euler(movePoint.rotation.x, movePoint.rotation.y, 90f);

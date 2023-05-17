@@ -6,7 +6,7 @@ public class UIItemCollection : MonoBehaviour
 {
     public GameObject SelectedPrefab { get; private set; }
     public bool EraserSelected { get; private set; }
-    public Items SelectedItemType { get { return _selectedItem.itemType; } }
+    public Items SelectedItemType { get { return _selectedItem.ItemType; } }
     private Item _selectedItem = new Item();
 
     UIItem _currentUIItem = null;
@@ -21,7 +21,7 @@ public class UIItemCollection : MonoBehaviour
         _previousUIItem = _currentUIItem;
 
         Debug.Log("Selected Item/Prefab: " + prefab.ToString());
-        Debug.Log(prefab.GetComponent<Item>().itemType);
+        Debug.Log(prefab.GetComponent<Item>().ItemType);
     }
     public void SelectEraser()
     {
