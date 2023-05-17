@@ -1458,8 +1458,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTask: 0
-  mainWheel: {fileID: 0}
-  firstBoltTask4: 1
 --- !u!4 &419899606 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5795589784813101589, guid: 307d51e1bc7c4334f95d18c79bc81250, type: 3}
@@ -3433,7 +3431,7 @@ GameObject:
   - component: {fileID: 1106834702}
   - component: {fileID: 1106834703}
   m_Layer: 0
-  m_Name: Inventory
+  m_Name: Inventory-inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4117,6 +4115,8 @@ MonoBehaviour:
   - {fileID: 580083337000817061, guid: 999d6d64278c8fd4a9f351da4dac5312, type: 3}
   - {fileID: 4473645201323808584, guid: 842958ee60a1bdb49b2149e2a0158c1e, type: 3}
   - {fileID: 7458875396578858102, guid: 665a44637c50ef24599dee632b52aeeb, type: 3}
+  - {fileID: 1388098759956508385, guid: 18bcd838011596f40afdd5899f526ab5, type: 3}
+  - {fileID: 1388098759956508385, guid: ebc42b0b60eb2d344a2275a593eebbbe, type: 3}
 --- !u!114 &1367334308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4129,6 +4129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbc9192c1135124e8c91b61d71cd1e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadTasksButtonClick: {fileID: 1367334304}
 --- !u!4 &1427680893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3913935573792214305, guid: f79c6a446b9b92940a8617894516e680, type: 3}

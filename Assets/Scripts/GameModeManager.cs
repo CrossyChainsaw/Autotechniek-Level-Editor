@@ -11,8 +11,6 @@ public enum Gamemodes
     CarTask // aka minigame
 }
 
-// heb dit static gemaakt omdat ik het wil gebruiken in alle scenes en data tijdelijk wil opslaan.
-// ik kan ook DontDestroyOnLoad gebruiken, dan blijft he object leven maar static voelt meer natuurlijk om hier te gebruiken
 public class GameModeManager 
 {
     public static Gamemodes Gamemode { get; private set; }

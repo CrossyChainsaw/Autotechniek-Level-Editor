@@ -32,6 +32,7 @@ TagManager:
   - TaskTips
   - LoadSaveButton
   - AvailableTasks
+  - CarTaskButtonCollection
   layers:
   - Default
   - TransparentFX

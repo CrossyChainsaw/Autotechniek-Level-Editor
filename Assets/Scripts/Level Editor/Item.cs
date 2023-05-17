@@ -37,8 +37,6 @@ public class Item : MonoBehaviour
     private void Start()
     {
         _uiItemCollection = GameObject.FindGameObjectWithTag("UIItemCollection").GetComponent<UIItemCollection>();
-        _carTask1 = GameObject.FindGameObjectWithTag("Minigame1").GetComponent<CarTask1>();
-
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
@@ -51,6 +49,7 @@ public class Item : MonoBehaviour
     {
         if (GameModeManager.Gamemode == Gamemodes.CarTask)
         {
+            _carTask1 = (CarTask1)GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().TaskList[0];
             _carTask1.Minigame_Item(PrefabID, this.gameObject);
         }
 
@@ -61,7 +60,7 @@ public class Item : MonoBehaviour
             Destroy(gameObject);
             Debug.Log("Destroyed ig");
             Item destroyedItem = destroyedObject.GetComponent<Item>();
-            List<(int id, int x, int y)> data = Data.ReadDataFromTextFile();
+            List<(int id, int x, int y)> data = Data.GridData.ReadDataFromTextFile();
 
             (int id, int x, int y) removeThisEntry = (-1, -1, -1);
             int i = 0;
@@ -75,7 +74,7 @@ public class Item : MonoBehaviour
                 i++;
             }
             data.Remove(removeThisEntry);
-            await Data.Overwrite(data);
+            await Data.GridData.Overwrite(data);
         }
         else
         {

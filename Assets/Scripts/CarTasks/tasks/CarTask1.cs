@@ -11,18 +11,29 @@ public enum Minigame1Tasks
     Task5
 }
 
-public class CarTask1 : MonoBehaviour
+// CarTask abstract maken zou best nice zijn
+
+public class CarTask1 : CarTask
 {
-    int nBolts = 5;
-    int nPreviousBolt = -1;
     public Minigame1Tasks currentTask = Minigame1Tasks.Task1;
-    public GameObject mainWheel;
-    public bool firstBoltTask4 = true;
+    bool _firstBoltTask4 = true;
+    int _nBolts = 5;
+    int _nPreviousBolt = -1;
+    GameObject _mainWheel;
+
+    public CarTask1(int id, string name, Items startItem, string description, params Items[] itemArray) : base(id, name, startItem, description, itemArray)
+    {
+        ID = id;
+        Name = name;
+        StartItem = startItem;
+        Description = description;
+        RequiredTools = itemArray;
+    }
 
     public void RemoveBolt()
     {
-        nBolts--;
-        if (nBolts == 0)
+        _nBolts--;
+        if (_nBolts == 0)
         {
             NextPhase();
         }
@@ -37,8 +48,8 @@ public class CarTask1 : MonoBehaviour
     }
     public void PlaceBolt()
     {
-        nBolts++;
-        if (nBolts == 5)
+        _nBolts++;
+        if (_nBolts == 5)
         {
             NextPhase();
         }
@@ -49,13 +60,6 @@ public class CarTask1 : MonoBehaviour
         i++;
         currentTask = (Minigame1Tasks)i;
         Debug.Log(currentTask);
-    }
-    public void SwitchCamBackToGame()
-    {
-        GameObject MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        MainCamera.transform.position = new Vector3(0, 0, -10);
-        GameObject Inventory = GameObject.FindGameObjectWithTag("Inventory");
-        Inventory.transform.position = new Vector3(850, 0, 2);
     }
     public void Minigame_Item(int prefabID, GameObject gameObject)
     {
@@ -68,7 +72,7 @@ public class CarTask1 : MonoBehaviour
         }
         else if (prefabID == (int)Items.Wheel && currentTask == Minigame1Tasks.Task2)
         {
-            mainWheel = gameObject;
+            _mainWheel = gameObject;
             gameObject.SetActive(false);
             RemoveWheel();
         }
@@ -79,21 +83,21 @@ public class CarTask1 : MonoBehaviour
             int nCurrentBolt = System.Convert.ToInt32(currentBolt.Replace("Bolt ", ""));
 
 
-            if (firstBoltTask4)
+            if (_firstBoltTask4)
             {
                 gameObject.SetActive(false);
                 PlaceBolt();
-                nPreviousBolt = nCurrentBolt;
-                firstBoltTask4 = false;
+                _nPreviousBolt = nCurrentBolt;
+                _firstBoltTask4 = false;
             }
             // vanaf nu gaan we kijken of je kruislinks te werk gaat
             else
             {
-                if (KruisLinksBoltCheck(nCurrentBolt, nPreviousBolt))
+                if (KruisLinksBoltCheck(nCurrentBolt, _nPreviousBolt))
                 {
                     gameObject.SetActive(false);
                     PlaceBolt();
-                    nPreviousBolt = nCurrentBolt;
+                    _nPreviousBolt = nCurrentBolt;
                 }
                 else
                 {
@@ -103,25 +107,38 @@ public class CarTask1 : MonoBehaviour
         }
         else if (currentTask == Minigame1Tasks.Task5)
         {
-            SwitchCamBackToGame();
-            Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-            player.EnableControls();
+            Deactivate();
         }
         else
         {
-            Debug.Log(prefabID);
+            Debug.Log("PrefabID: " + prefabID + ", currentTask: " + currentTask + ", _uiItemCollection.SelectedItemType:" + _uiItemCollection.SelectedItemType);
         }
     }
     public void Minigame_UIItem(GameObject prefab, UIItem uiItem)
     {
-        if (prefab.tag == "Wheel" && currentTask == Minigame1Tasks.Task3)
+        if (prefab == null)
         {
-            mainWheel.SetActive(true);
+            return;
+        }
+        else if (prefab.tag == "Wheel" && currentTask == Minigame1Tasks.Task3)
+        {
+            _mainWheel.SetActive(true);
             Destroy(uiItem.gameObject);
             PlaceWheel();
         }
     }
-    public void Activate()
+    bool KruisLinksBoltCheck(int nCurrentBolt, int nPreviousBolt)
+    {
+        if (System.Math.Abs(nCurrentBolt - nPreviousBolt) == 2 || System.Math.Abs(nCurrentBolt - nPreviousBolt) == 3)
+        {
+            return true; // indeed kruislinks
+        }
+        else
+        {
+            return false; // not kruislinks
+        }
+    }
+    public override void Activate()
     {
         // move cam
         GameObject MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -135,16 +152,8 @@ public class CarTask1 : MonoBehaviour
         // log
         Debug.Log("Activate Minigame");
     }
-    bool KruisLinksBoltCheck(int nCurrentBolt, int nPreviousBolt)
+    public override void Deactivate()
     {
-        if (System.Math.Abs(nCurrentBolt - nPreviousBolt) == 2 || System.Math.Abs(nCurrentBolt - nPreviousBolt) == 3)
-        {
-            return true; // indeed kruislinks
-        }
-        else
-        {
-            return false; // not kruislinks
-        }
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().FinishCurrentTask();
     }
-
 }

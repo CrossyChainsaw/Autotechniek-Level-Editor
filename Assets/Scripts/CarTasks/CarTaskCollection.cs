@@ -12,8 +12,8 @@ public class CarTaskCollection : MonoBehaviour
         AllTasks = new List<CarTask>();
 
         // These are in Dutch because they will be shown inside the game (sorry)
-        AllTasks.Add(new CarTask("Verwissel een Wiel", Items.Wheel, "Pak de Kruissleutel en de Momentsleutel en interact met het wiel", Items.CrossSocketWrench, Items.TorqueWrench, Items.Wheel));
-        AllTasks.Add(new CarTask("Verwissel de Accu", Items.EngineHood, "Pak de Accu en de Steeksleutel en interact met de motorkap", Items.CarBattery, Items.Wrench));
+        AllTasks.Add(new CarTask1(0, "Verwissel een Wiel", Items.Wheel, "Pak de Kruissleutel en de Momentsleutel en interact met het wiel", Items.CrossSocketWrench, Items.TorqueWrench, Items.Wheel));
+        AllTasks.Add(new CarTask2(1, "Verwissel de Accu", Items.EngineHood, "Pak de Accu en de Steeksleutel en interact met de motorkap", Items.CarBattery, Items.Wrench, Items.Drill));
     }
     public void SelectTask(int i)
     {

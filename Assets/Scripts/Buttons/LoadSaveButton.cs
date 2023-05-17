@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class LoadSaveButton : MonoBehaviour
 {
     public Button loadSaveButtonClick;
-    public List<GameObject> prefabList = new List<GameObject>();
-
+    public List<GameObject> prefabList = new List<GameObject>(); // WARNING - since this property is assigned inside unity it will take a very longtime to re-assign everything, so try not to rename this property
+    public CarTaskButtonCollection CarTaskButtonCollection;
     void Start()
     {
         Button btn = loadSaveButtonClick.GetComponent<Button>();
@@ -18,6 +18,12 @@ public class LoadSaveButton : MonoBehaviour
     {
         LoadObjectsFromSave();
         DisableButton();
+        if (GameModeManager.Gamemode == Gamemodes.Level_Editor)
+        {
+            Debug.Log("Trying"); // werkt gwn niet
+            LoadSelectedTasks();
+            EnableCarTaskButtons();
+        }
     }
     void DisableButton()
     {
@@ -25,7 +31,7 @@ public class LoadSaveButton : MonoBehaviour
     }
     void LoadObjectsFromSave()
     {
-        List<(int id, int x, int y)> data = Data.LoadAsTupleList();
+        List<(int id, int x, int y)> data = Data.GridData.LoadAsTupleList();
         while (data.Count > 0)
         {
             Debug.Log("Finding Prefab by ID");
@@ -53,5 +59,30 @@ public class LoadSaveButton : MonoBehaviour
             }
         }
         return correctPrefab;
+    }
+
+    void LoadSelectedTasks()
+    {
+        List<CarTask> selectedTasks = Data.CarTaskData.LoadCarTasksFromTextFile();
+
+
+        foreach (CarTaskButton carTaskButton in CarTaskButtonCollection.CarTaskButtonList)
+        {
+            foreach (CarTask carTask in selectedTasks)
+            {
+                if (carTaskButton.CarTask.ID == carTask.ID) // als de button in de list, een cartask id bevat die identiek is aan de id in selectedtask, maak deze button dan groen
+                {
+                    carTaskButton.gameObject.GetComponent<Image>().color = Color.green;
+                    break;
+                }
+            }
+        }
+    }
+    void EnableCarTaskButtons()
+    {
+        foreach (CarTaskButton carTaskButton in CarTaskButtonCollection.CarTaskButtonList)
+        {
+            carTaskButton.gameObject.GetComponent<Button>().interactable = true;
+        }
     }
 }

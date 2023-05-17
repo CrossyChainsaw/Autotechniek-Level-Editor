@@ -13,13 +13,13 @@ public class UIItem : MonoBehaviour
     private void Start()
     {
         _uiItemCollection = GameObject.FindGameObjectWithTag("UIItemCollection").GetComponent<UIItemCollection>();
-        _carTask1 = GameObject.FindGameObjectWithTag("Minigame1").GetComponent<CarTask1>();
     }
 
     private void OnMouseDown()
     {
         if (GameModeManager.Gamemode == Gamemodes.CarTask)
         {
+            _carTask1 = (CarTask1)GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().TaskList[0];
             _carTask1.Minigame_UIItem(prefab, this);
         }
         _border = CreateBorder();
