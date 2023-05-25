@@ -6,6 +6,6 @@ public class LevelEditorScene : MonoBehaviour
 {
     void Start()
     {
-        GameModeManager.SetGamemode(Gamemodes.Level_Editor);
+        GameModeManager.SetGamemode(Gamemodes.Level_Editor); // switching gamemode is important since it unlocks/disables certain blocks of code
     }
 }

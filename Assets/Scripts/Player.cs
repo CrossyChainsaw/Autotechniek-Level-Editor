@@ -7,78 +7,64 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public float moveSpeed;
-    public Transform movePoint;
-    public SpriteRenderer spriteRenderer;
-    public LayerMask stopMovementLayer;
-    public List<CarTask> TaskList { get; private set; }
-    Inventory _inventory;
+    public float moveSpeed; // amount of tiles player moves, setted in runtime
+    public Transform movePoint; // player transform
+    public SpriteRenderer spriteRenderer; // player sprite
+    public LayerMask stopMovementLayer; // StopMovementLayer is the layer that stops the player form moving, for example the blue blocks in the game contain this layey. Same for the black boundaries
+    public List<CarTask> TaskList { get; private set; } // a list with all assigned cartasks. these get loaded from a data source (currently textfile)
+    Inventory _inventory; // player inventory
 
     private void Start()
     {
         _inventory = new Inventory();
-        TaskList = Data.CarTaskData.LoadCarTasksFromTextFile();
-        //TaskList = GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().CarTaskCollection.AllTasks; // links CarTaskCollection Constructor with player
+        TaskList = Data.CarTaskData.LoadCarTasksFromTextFile(); // load cartasks from datasource
     }
     void Update()
     {
         Movement();
     }
-
-    // Collision/Interaction
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (GameModeManager.Gamemode == Gamemodes.Play)
+        if (GameModeManager.Gamemode == Gamemodes.Play) // these only get triggered if you are in the play section
         {
-            Item item = col.gameObject.GetComponent<Item>();
-            Debug.Log(item.ItemType);
+            Item item = col.gameObject.GetComponent<Item>(); // get the item you collided with
+            Debug.Log("Collided with: " + item.ItemType);
 
             // Collect any collectable item
             if (item.Collectable == true)
             {
                 _inventory.AddItem(item);
             }
-            else if (item.ItemType == Items.Wheel)
+            // if the item you collided with is a StartItem it checks if its the correct StartItem for the current CarTask
+            else if (item.ItemType == TaskList[0].StartItem)
             {
-                if (_inventory.HasItem(TaskList[0].RequiredTools))
+                if (_inventory.HasItem(TaskList[0].RequiredTools)) // does your inventory contains the required items for this task?
                 {
-                    ((CarTask1)TaskList[0]).Activate();
-                    DisableControls();
+                    DisableControls(); // so you cant accidentally move during task
+                    TaskList[0].Activate(); // activate the current task
                 }
                 else
                 {
-                    PrintRequiredTools();
+                    PrintRequiredTools(); // print the tools you didnt collect yet, try to show this in the UI somehow for better gameplay
                 }
             }
-            else if (item.ItemType == Items.EngineHood)
-            {
-                if (_inventory.HasItem(TaskList[0].RequiredTools))
-                {
-                    ((CarTask2)TaskList[0]).Activate();
-                    DisableControls();
-                }
-                else
-                {
-                    PrintRequiredTools();
-                }
-            }
-            // foreach task // if you have required items activate // else print req tools
+        }
+        else
+        {
+            Debug.Log(GameModeManager.Gamemode);
         }
     }
+    void CameraBackToPlaySection()
+    {
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayMode>().SwitchToPlayCam();
+    }
+
+    // CarTask/Items
     public void FinishCurrentTask()
     {
-        // switch back cam
-        GameObject MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        MainCamera.transform.position = new Vector3(0, 0, -10);
-        GameObject Inventory = GameObject.FindGameObjectWithTag("Inventory");
-        Inventory.transform.position = new Vector3(835, 0, 2);
-        Debug.Log(7);
-        // remove task
-        TaskList.Remove(TaskList[0]);
-        Debug.Log(7);
-        // load in next task
-        GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().LoadInTask(TaskList[0]);
-        Debug.Log(7);
+        TaskList.Remove(TaskList[0]); // remove current task form the tasklist
+        CameraBackToPlaySection();
+        LoadInNextTask();
         EnableControls();
     }
     void PrintRequiredTools()
@@ -86,27 +72,32 @@ public class Player : MonoBehaviour
         print("You didn't collect the required tools. Required Tools: ");
         foreach (var item in TaskList[0].RequiredTools)
         {
-            if (!_inventory.ItemList.Contains(item))
+            if (!_inventory.ItemList.Contains(item)) // if you didn't collect the required tool, print it, again preferably put it in UI for better gameplay
             {
                 Debug.Log(item);
             }
         }
+    } // might wannna show on screen
+    void LoadInNextTask()
+    {
+        GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().LoadInTask(TaskList[0]);
+    }
+    public void UseItem(Items item, UIItem uiItem)
+    {
+        _inventory.RemoveItem(item); // removes item in the code
+        Destroy(uiItem.gameObject); // removes item onscreen
     }
 
-    // Inventory
-    /// <summary>Removes a wheel from the player's inventory</summary>
-    public void UseItem(Items item)
-    {
-        _inventory.RemoveItem(item);
-    }
 
     // Controls
     public void DisableControls()
     {
+        print("Disabling Controls");
         GameModeManager.SetGamemode(Gamemodes.CarTask);
     }
     public void EnableControls()
     {
+        print("Enabling Controls");
         GameModeManager.SetGamemode(Gamemodes.Play);
     }
 
@@ -114,7 +105,6 @@ public class Player : MonoBehaviour
     /// <summary>Moves the player in a direction using the arrow keys</summary>
     void Movement()
     {
-        Debug.Log(GameModeManager.Gamemode);
         // only enable movement inside play mode
         if (GameModeManager.Gamemode == Gamemodes.Play)
         {

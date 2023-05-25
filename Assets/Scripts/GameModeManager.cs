@@ -13,7 +13,7 @@ public enum Gamemodes
 
 public class GameModeManager 
 {
-    public static Gamemodes Gamemode { get; private set; }
+    public static Gamemodes Gamemode { get; private set; } // the current gamemode
     public static void SetGamemode(Gamemodes g)
     {
         Gamemode = g;

@@ -8,8 +8,8 @@ public class CarTaskButton : MonoBehaviour
 {
     public Button Button;
     public TextMeshProUGUI ButtonText;
-    public CarTask CarTask { get; private set; }
-    Color _color;
+    public CarTask CarTask { get; private set; } // the cartask inside the button
+    Color _color; // color of the button
 
     void Start()
     {
@@ -32,7 +32,6 @@ public class CarTaskButton : MonoBehaviour
     async void Activate()
     {
         this.GetComponent<Image>().color = Color.green;
-        //await Data.Overwrite(_carTask.ID);
         await Data.CarTaskData.AddDataEntry(CarTask.ID);
     }
     async void Deactivate()
@@ -51,6 +50,6 @@ public class CarTaskButton : MonoBehaviour
     void CheckAvailibilty()
     {
         //add when time left
-        //Are all objects that are required for my cartask present on the grid?
+        //Are all objects that are required for my cartask present on the grid? then enable the user to click this cartask
     }
 }

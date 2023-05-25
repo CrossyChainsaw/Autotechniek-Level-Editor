@@ -12,8 +12,8 @@ public class LoadTasks : MonoBehaviour
     void Start()
     {
         GameModeManager.SetGamemode(Gamemodes.Play);
-        TaskList = Data.CarTaskData.LoadCarTasksFromTextFile();
-        //TaskList = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().TaskList;
+        TaskList = Data.CarTaskData.LoadCarTasksFromTextFile(); // load cartasks from textfile
+        //TaskList = new CarTaskCollection().AllTasks; // HARDCODE: Assign all tasks to player, only use for testing
         LoadTasksButtonClick.GetComponent<Button>().onClick.AddListener(ButtonClick);
     }
     void ButtonClick()
@@ -28,7 +28,7 @@ public class LoadTasks : MonoBehaviour
         TaskDescription.text = TaskList[0].Description;
         TextMeshProUGUI TaskTips = GameObject.FindGameObjectWithTag("TaskTips").GetComponent<TextMeshProUGUI>();
         TaskTips.text = "placeholder";
-    }
+    } // tip: watchout for removing tags, i check on tagnames quite a lot
     public void LoadInTask(CarTask c)
     {
         TextMeshProUGUI TaskName = GameObject.FindGameObjectWithTag("TaskName").GetComponent<TextMeshProUGUI>();
