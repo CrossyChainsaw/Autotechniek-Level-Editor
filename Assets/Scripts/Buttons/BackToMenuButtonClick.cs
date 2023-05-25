@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,7 +5,7 @@ using UnityEngine.UI;
 public class BackToMenuButtonClick : MonoBehaviour
 {
 	public Button backToMenuButton;
-	const string MENU_SCENE = "Menu";
+	const string MENU_SCENE = "Menu"; // get rid of name condition
 
 	void Start()
 	{

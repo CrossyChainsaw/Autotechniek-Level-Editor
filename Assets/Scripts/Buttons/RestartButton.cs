@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class RestartButton : MonoBehaviour
+public class RestartButton : MonoBehaviour // this button just reloads the scene
 {
 	public Button restartButton;
 

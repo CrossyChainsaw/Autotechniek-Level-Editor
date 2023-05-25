@@ -5,17 +5,27 @@ using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Data
+public class Data 
 {
     public class GridData
     {
         public const string DATA_FILE_GRID = "Grid.txt";
-
+        /// <summary>Automatically saves object to textfile</summary>
+        public static async Task AutoSaveToTextFile(GameObject gameObject, Vector3 pos)
+        {
+            // open connection to data textfile
+            using StreamWriter file = new(Data.GridData.DATA_FILE_GRID, append: true);
+            // write data to textfile
+            await file.WriteLineAsync(gameObject.GetComponent<Item>().PrefabID.ToString());
+            await file.WriteLineAsync(pos.x.ToString());
+            await file.WriteLineAsync(pos.y.ToString());
+        }
         public static async Task Overwrite(List<(int id, int x, int y)> data)
         {
-            string[] newData = TupleListToStringArray(data);
+            string[] newData = ConvertTupleListToStringArray(data);
             await File.WriteAllLinesAsync(DATA_FILE_GRID, newData);
         }
+        /// <summary>Loads data from textfile as tuple list</summary>
         public static List<(int id, int x, int y)> LoadAsTupleList()
         {
             List<(int id, int x, int y)> data = new List<(int id, int x, int y)>();
@@ -36,30 +46,7 @@ public class Data
             }
             return data;
         }
-        public static List<(int id, int x, int y)> ReadDataFromTextFile()
-        {
-            List<(int id, int x, int y)> data = new List<(int id, int x, int y)>();
-            List<int> dataParts = new List<int>();
-            int count = 0;
-
-            foreach (string line in System.IO.File.ReadLines(DATA_FILE_GRID))
-            {
-                Debug.Log(line);
-                dataParts.Add(Convert.ToInt32(line));
-                count++;
-                if (count == 3)
-                {
-                    data.Add((dataParts[0], dataParts[1], dataParts[2]));
-                    dataParts.Clear();
-                    count = 0;
-                    // test this shit
-                }
-            }
-            Debug.Log(data[0]);
-            Debug.Log(data[1]);
-            return data;
-        }
-        private static string[] TupleListToStringArray(List<(int id, int x, int y)> data)
+        private static string[] ConvertTupleListToStringArray(List<(int id, int x, int y)> data)
         {
             List<string> dataInStringList = new List<string>();
             foreach ((int id, int x, int y) entry in data)
@@ -71,12 +58,10 @@ public class Data
             string[] dataFinal = dataInStringList.ToArray();
             return dataFinal;
         } // must be in string array to save in txt file
-    }
-
+    } // textfile data actions for grid data
     public class CarTaskData
     {
         const string DATA_FILE_CARTASKS = "CarTasks.txt";
-
         public static List<CarTask> LoadCarTasksFromTextFile()
         {
             List<CarTask> loadedCarTasks = new List<CarTask>();
@@ -92,7 +77,7 @@ public class Data
         {
             List<CarTask> selectedTasks = LoadCarTasksFromTextFile();                    // load old data
             selectedTasks.Add(new CarTaskCollection().AllTasks[carTaskID]);              // add new entry
-            string[] selectedTasksStringArray = CarTaskListToStringArray(selectedTasks); // format data
+            string[] selectedTasksStringArray = ConvertCarTaskListToStringArray(selectedTasks); // format data
             await File.WriteAllLinesAsync(DATA_FILE_CARTASKS, selectedTasksStringArray); // write new data
         }
         /// <summary>Remove an existing data entry from CarTaskData</summary>
@@ -100,9 +85,8 @@ public class Data
         {
             List<CarTask> selectedTasks = LoadCarTasksFromTextFile();
             selectedTasks = RemoveEntry(selectedTasks, carTaskID);
-            string[] selectedTasksStringArray = CarTaskListToStringArray(selectedTasks); // format data
+            string[] selectedTasksStringArray = ConvertCarTaskListToStringArray(selectedTasks); // format data
             await File.WriteAllLinesAsync(DATA_FILE_CARTASKS, selectedTasksStringArray); // write new data
-            
             static List<CarTask> RemoveEntry(List<CarTask> selectedTasks, int carTaskID)
             {
                 CarTask CarTaskThatHasToBeRemoved = null;
@@ -117,7 +101,7 @@ public class Data
                 return selectedTasks;
             }
         }
-        static string[] CarTaskListToStringArray(List<CarTask> carTaskList)
+        static string[] ConvertCarTaskListToStringArray(List<CarTask> carTaskList)
         {
             List<string> data = new List<string>();
             foreach (CarTask carTask in carTaskList)
@@ -126,5 +110,5 @@ public class Data
             }
             return data.ToArray();
         }
-    }
+    } // textfile data actions for cartaskdata
 }

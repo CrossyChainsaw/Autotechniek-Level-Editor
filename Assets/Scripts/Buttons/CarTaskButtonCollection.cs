@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class CarTaskButtonCollection : MonoBehaviour
 {
-    public GridLayoutGroup GridLayoutGroup;
+    public GridLayoutGroup GridLayoutGroup; // the grid inside unity that makes them appear nicely under each other
     public List<CarTaskButton> CarTaskButtonList = new List<CarTaskButton>();
     private void Start()
     {
         CreateCarTaskButtons();
     }
 
-    /// <summary>Creates a button for each existing CarTask</summary>
+    /// <summary>Creates a button for each existing CarTask</summary> // if you want to add a cartask you should be at CarTaskCollection
     void CreateCarTaskButtons()
     {
         List<CarTask> TaskList = new CarTaskCollection().AllTasks;
@@ -31,5 +31,5 @@ public class CarTaskButtonCollection : MonoBehaviour
         carTaskButton.SetCarTask(carTask);
         carTaskButton.SetButtonText(carTask.Name);
         return carTaskButton;
-    }
+    } // single button
 }

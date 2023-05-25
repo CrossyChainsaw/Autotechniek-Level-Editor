@@ -22,18 +22,15 @@ public class CarTask2 : CarTask
         Description = description;
         RequiredTools = itemArray;
     }
-
     public override void Activate()
     {
-        // switch cam to minigame
         Debug.Log("Good Job! Task 2 Finished!");
         Deactivate(); // when you make a minigame, put this in the last line right after finishing the minigame
-    }
-
+    } // Activates the CarTask, doesn't contain code
     public override void Deactivate()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().FinishCurrentTask();
-    }
+    } // Deactivates CarTask
 }
 
 

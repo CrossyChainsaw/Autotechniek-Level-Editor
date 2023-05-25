@@ -4,25 +4,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LoadSaveButton : MonoBehaviour
+public class LoadSaveButton : MonoBehaviour // this class is a mess, inside the application you manually have to give all prefabs (its hardcoded), try to remove that from the application and make it dynamic
 {
-    public Button loadSaveButtonClick;
+    public Button loadSaveButtonClick; // the load button
     public List<GameObject> prefabList = new List<GameObject>(); // WARNING - since this property is assigned inside unity it will take a very longtime to re-assign everything, so try not to rename this property
     public CarTaskButtonCollection CarTaskButtonCollection;
     void Start()
     {
         Button btn = loadSaveButtonClick.GetComponent<Button>();
-        btn.onClick.AddListener(ButtonClick);
+        btn.onClick.AddListener(ButtonClick); // assign click event to the button
     }
     void ButtonClick()
     {
         LoadObjectsFromSave();
         DisableButton();
-        if (GameModeManager.Gamemode == Gamemodes.Level_Editor)
+        if (GameModeManager.Gamemode == Gamemodes.Level_Editor) 
         {
-            Debug.Log("Trying"); // werkt gwn niet
-            LoadSelectedTasks();
             EnableCarTaskButtons();
+            LoadSelectedTasks();
         }
     }
     void DisableButton()
@@ -59,7 +58,7 @@ public class LoadSaveButton : MonoBehaviour
             }
         }
         return correctPrefab;
-    }
+    } // we can find prefabs by id because of the hardcoded prefabList
 
     void LoadSelectedTasks()
     {

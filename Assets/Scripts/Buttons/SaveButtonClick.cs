@@ -4,30 +4,21 @@ using System.Collections;
 using System.IO;
 using System.Threading.Tasks;
 
-public class SaveButtonClick : MonoBehaviour
+public class SaveButtonClick : MonoBehaviour // i never really made this, everything gets saved automatically
 {
 	public Button saveButton;
 
 	void Start()
 	{
 		Button btn = saveButton.GetComponent<Button>();
-		btn.onClick.AddListener(TaskOnClick);
+		btn.onClick.AddListener(Save);
 	}
-
-	void TaskOnClick()
+	void Save()
 	{
 		// Read Editor.txt save
 		// Put all data in new textfile
 		// user can give name to this textfile
-		Debug.Log("Saved!");
+		//Debug.Log("Saved!");
 		// empty Editor.txt
-	}
-
-	public static async Task ExampleAsync(GameObject gameObject, Vector3 pos) // shit works damn
-	{
-		using StreamWriter file = new(Data.GridData.DATA_FILE_GRID, append: true);
-		await file.WriteLineAsync(gameObject.GetComponent<Item>().PrefabID.ToString());
-		await file.WriteLineAsync(pos.x.ToString());
-		await file.WriteLineAsync(pos.y.ToString());
 	}
 }

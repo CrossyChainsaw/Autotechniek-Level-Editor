@@ -11,7 +11,7 @@ public enum Minigame1Tasks
     Task5
 }
 
-// CarTask abstract maken zou best nice zijn
+// minigame is hardcoded, as soon as you make more minigames, it would be nice to code them all oop since you can reuse scripts where you plug in or out smaller objects like bolts n stuff
 
 public class CarTask1 : CarTask
 {
@@ -113,7 +113,7 @@ public class CarTask1 : CarTask
         {
             Debug.Log("PrefabID: " + prefabID + ", currentTask: " + currentTask + ", _uiItemCollection.SelectedItemType:" + _uiItemCollection.SelectedItemType);
         }
-    }
+    } // can be moved to CarTask base class
     public void Minigame_UIItem(GameObject prefab, UIItem uiItem)
     {
         if (prefab == null)
@@ -123,13 +123,13 @@ public class CarTask1 : CarTask
         else if (prefab.tag == "Wheel" && currentTask == Minigame1Tasks.Task3)
         {
             _mainWheel.SetActive(true);
-            Destroy(uiItem.gameObject);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().UseItem(Items.Wheel, uiItem);
             PlaceWheel();
         }
-    }
+    } // can be moved to CarTask base class
     bool KruisLinksBoltCheck(int nCurrentBolt, int nPreviousBolt)
     {
-        if (System.Math.Abs(nCurrentBolt - nPreviousBolt) == 2 || System.Math.Abs(nCurrentBolt - nPreviousBolt) == 3)
+        if (System.Math.Abs(nCurrentBolt - nPreviousBolt) == 2 || System.Math.Abs(nCurrentBolt - nPreviousBolt) == 3) // draw out this problem to better understand it
         {
             return true; // indeed kruislinks
         }
