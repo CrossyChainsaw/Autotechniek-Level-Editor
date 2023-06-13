@@ -116,11 +116,12 @@ public class CarTask1 : CarTask
     } // can be moved to CarTask base class
     public void Minigame_UIItem(GameObject prefab, UIItem uiItem)
     {
+        Item prefabItem = prefab.GetComponent<Item>();
         if (prefab == null)
         {
             return;
         }
-        else if (prefab.tag == "Wheel" && currentTask == Minigame1Tasks.Task3)
+        else if (prefabItem.ItemType == Items.Wheel && currentTask == Minigame1Tasks.Task3)
         {
             _mainWheel.SetActive(true);
             GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().UseItem(Items.Wheel, uiItem);

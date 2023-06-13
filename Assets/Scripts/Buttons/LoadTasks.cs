@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class LoadTasks : MonoBehaviour
 {
     public Button LoadTasksButtonClick;
-    List<CarTask> TaskList;
+    public List<CarTask> TaskList { get; private set; }
 
     void Start()
     {
         GameModeManager.SetGamemode(Gamemodes.Play);
         TaskList = Data.CarTaskData.LoadCarTasksFromTextFile(); // load cartasks from textfile
-        //TaskList = new CarTaskCollection().AllTasks; // HARDCODE: Assign all tasks to player, only use for testing
+        //TaskList = new CarTaskCollection().AllTasks; // HARDCODE: Assign all tasks to player, only use for testing (this is used in the itch version)
         LoadTasksButtonClick.GetComponent<Button>().onClick.AddListener(ButtonClick);
     }
     void ButtonClick()
@@ -27,7 +27,7 @@ public class LoadTasks : MonoBehaviour
         TextMeshProUGUI TaskDescription = GameObject.FindGameObjectWithTag("TaskDescription").GetComponent<TextMeshProUGUI>();
         TaskDescription.text = TaskList[0].Description;
         TextMeshProUGUI TaskTips = GameObject.FindGameObjectWithTag("TaskTips").GetComponent<TextMeshProUGUI>();
-        TaskTips.text = "placeholder";
+        TaskTips.text = "";
     } // tip: watchout for removing tags, i check on tagnames quite a lot
     public void LoadInTask(CarTask c)
     {
@@ -36,6 +36,6 @@ public class LoadTasks : MonoBehaviour
         TextMeshProUGUI TaskDescription = GameObject.FindGameObjectWithTag("TaskDescription").GetComponent<TextMeshProUGUI>();
         TaskDescription.text = c.Description;
         TextMeshProUGUI TaskTips = GameObject.FindGameObjectWithTag("TaskTips").GetComponent<TextMeshProUGUI>();
-        TaskTips.text = "placeholder";
+        TaskTips.text = "";
     }
 }

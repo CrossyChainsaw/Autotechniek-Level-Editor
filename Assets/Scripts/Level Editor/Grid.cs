@@ -15,14 +15,20 @@ public class Grid : MonoBehaviour
     }
     public void OnMouseDown()
     {
-        // get the mouse location in the game
-        Vector3 mousePosition = GetMousePositionInScene();
-        PlaceItemOnScreen(mousePosition);
+        if (_uiItemCollection.SelectedPrefab != null)
+        {
+            // get the mouse location in the game
+            Vector3 mousePosition = GetMousePositionInScene();
+            PlaceItemOnScreen(mousePosition);
+        }
     }
     async void PlaceItemOnScreen(Vector3 mousePosition)
     {
         double x = mousePosition.x, y = mousePosition.y; // get the mouseposition
 
+        //-------------------------------------------------------------//
+        //                      I M P O R T A N T                      //
+        //-------------------------------------------------------------//
         // EXPLANATION FORMULA -> Math.Floor(x / _tileSize) * _tileSize + (_tileSize / 2);
         // get the center point of the grid tile you clicked in
         // for example, the mouseposition is [48, 138]. this means x = 48. _tileSize is 100 because the grid background i used has tiles of 100px. lets fill in the formula,
@@ -40,7 +46,7 @@ public class Grid : MonoBehaviour
         // SECOND PART: + (_tileSize / 2); -> instead of bottom left, get the center position of the grid square. 
         // hope you understand it now
 
-        x = Math.Floor(x / _tileSize) * _tileSize + (_tileSize / 2); 
+        x = Math.Floor(x / _tileSize) * _tileSize + (_tileSize / 2);
         y = Math.Floor(y / _tileSize) * _tileSize + (_tileSize / 2);
         Debug.Log(x + ", " + y);
 
