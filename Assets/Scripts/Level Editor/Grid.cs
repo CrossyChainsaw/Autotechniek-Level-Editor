@@ -15,7 +15,7 @@ public class Grid : MonoBehaviour
     }
     public void OnMouseDown()
     {
-        // get the mouse location in the game
+        // get the mouse location in the game 
         Vector3 mousePosition = GetMousePositionInScene();
         PlaceItemOnScreen(mousePosition);
     }
