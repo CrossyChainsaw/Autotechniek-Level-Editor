@@ -48,9 +48,10 @@ public class Item : MonoBehaviour
     }
     public void OnMouseDown()
     {
-        // if you are currently in a cartask, then run this code
+        //// if you are currently in a cartask, then run this code
         if (GameModeManager.Gamemode == Gamemodes.CarTask)
         {
+            Debug.Log(GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().TaskList[0]);
             _carTask1 = (CarTask1)GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().TaskList[0]; // might be able to cast to CarTask
             _carTask1.Minigame_Item(PrefabID, this.gameObject); // again you might be able to change the variable to _carTask form the type CarTask
         }

@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     {
         _inventory = new Inventory();
         TaskList = Data.CarTaskData.LoadCarTasksFromTextFile(); // load cartasks from datasource
+        //TaskList = GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().TaskList; // HARDCODE: Assign all tasks to player, only use for testing (this is used in itch)
     }
     void Update()
     {
@@ -56,8 +57,8 @@ public class Player : MonoBehaviour
     }
     void CameraBackToPlaySection()
     {
-        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayMode>().SwitchToPlayCam();
-    }
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayScene>().SwitchToPlayCam();
+    } // after a minigame, this method returns the camera to the original position.
 
     // CarTask/Items
     public void FinishCurrentTask()
@@ -77,7 +78,7 @@ public class Player : MonoBehaviour
                 Debug.Log(item);
             }
         }
-    } // might wannna show on screen
+    } // try to show this on the screen
     void LoadInNextTask()
     {
         GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().LoadInTask(TaskList[0]);
@@ -87,7 +88,10 @@ public class Player : MonoBehaviour
         _inventory.RemoveItem(item); // removes item in the code
         Destroy(uiItem.gameObject); // removes item onscreen
     }
-
+    public void SetTaskList(List<CarTask> t)
+    {
+        TaskList = t;
+    } // sets the TaskList if the player
 
     // Controls
     public void DisableControls()
