@@ -27,6 +27,7 @@ public class Menu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             if (textObject.text == "Level Editor") // same problem 
             {
                 SceneManager.LoadScene(LEVEL_EDITOR_SCENE);
+                GameModeManager.SetGamemode(Gamemodes.Level_Editor);
             }
         }
     }

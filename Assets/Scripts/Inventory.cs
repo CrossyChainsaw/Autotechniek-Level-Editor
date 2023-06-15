@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour // player has an inventory (an instance o
             itemSlot.AddComponent<UIItem>();
             UIItem itemSlot_UIItem = itemSlot.GetComponent<UIItem>();
             itemSlot_UIItem.item = item.ItemType;
-            itemSlot_UIItem.prefab = Resources.Load("prefabs/" + item.ItemType.ToString()) as GameObject;
+            itemSlot_UIItem.prefab = Resources.Load("prefabs/items/" + item.ItemType.ToString()) as GameObject;
 
             // Add colliders
             itemSlot.AddComponent<BoxCollider2D>();
@@ -34,7 +34,7 @@ public class Inventory : MonoBehaviour // player has an inventory (an instance o
 
             // prefab object
             Debug.Log("item.ItemType.ToString(): " + item.ItemType.ToString());
-            GameObject prefab = Resources.Load("prefabs/" + item.ItemType.ToString()) as GameObject; // empty for some reason
+            GameObject prefab = Resources.Load("prefabs/items/" + item.ItemType.ToString()) as GameObject; // empty for some reason
             GameObject objectWithPrefab = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
             objectWithPrefab.transform.parent = itemSlot.transform;
 
