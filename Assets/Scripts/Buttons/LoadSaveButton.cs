@@ -7,12 +7,13 @@ using UnityEngine.UI;
 public class LoadSaveButton : MonoBehaviour // this class is a mess, inside the application you manually have to give all prefabs (its hardcoded), try to remove that from the application and make it dynamic
 {
     public Button loadSaveButtonClick; // the load button
-    public List<GameObject> prefabList = new List<GameObject>(); // WARNING - since this property is assigned inside unity it will take a very longtime to re-assign everything, so try not to rename this property
     public CarTaskButtonCollection CarTaskButtonCollection;
+    GameObject[] prefabList;
     void Start()
     {
         Button btn = loadSaveButtonClick.GetComponent<Button>();
         btn.onClick.AddListener(ButtonClick); // assign click event to the button
+        prefabList = Resources.LoadAll<GameObject>("prefabs/items");
     }
     void ButtonClick()
     {
@@ -44,8 +45,6 @@ public class LoadSaveButton : MonoBehaviour // this class is a mess, inside the 
     }
     GameObject FindPrefabByID(int id)
     {
-        Debug.Log("PrefabList[0]: " + prefabList[0]);
-        Debug.Log("PrefabList[1]: " + prefabList[1]);
         GameObject correctPrefab = null;
         foreach (GameObject prefab in prefabList)
         {
@@ -54,7 +53,7 @@ public class LoadSaveButton : MonoBehaviour // this class is a mess, inside the 
             if (prefabID == id)
             {
                 correctPrefab = prefab;
-                break; // if this method fucks up, remove this line
+                break;
             }
         }
         return correctPrefab;
