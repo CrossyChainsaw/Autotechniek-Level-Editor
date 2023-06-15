@@ -56,6 +56,11 @@ public class UIItemCollection : MonoBehaviour // uiitemcollection is the collect
                 GameObject instantiatedPrefab = Instantiate(prefab);
                 instantiatedPrefab.transform.parent = itemSlot.transform;
 
+                // Disable the box collider of them item so that you can only click on the UIItem
+                Item instantiatedPrefab_Item = instantiatedPrefab.GetComponent<Item>();
+                BoxCollider2D instantiatedPrefab_Item_BoxCollider2D = instantiatedPrefab_Item.GetComponent<BoxCollider2D>();
+                instantiatedPrefab_Item_BoxCollider2D.enabled = false;
+
                 // exceptions
                 if (prefabItem.ItemType == Items.Car)
                 {
