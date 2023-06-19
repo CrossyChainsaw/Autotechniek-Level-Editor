@@ -15,6 +15,10 @@ public enum Minigame1Tasks
 
 public class CarTask1 : CarTask
 {
+    const string TAG_UIITEM_COLLECTION = "UIItemCollection";
+    const string TAG_PLAYER = "Player";
+    const string TAG_LOAD_BUTTON = "LoadSaveButton";
+
     public Minigame1Tasks currentTask = Minigame1Tasks.Task1;
     bool _firstBoltTask4 = true;
     int _nBolts = 5;
@@ -63,7 +67,7 @@ public class CarTask1 : CarTask
     }
     public void Minigame_Item(int prefabID, GameObject gameObject)
     {
-        UIItemCollection _uiItemCollection = GameObject.FindGameObjectWithTag("UIItemCollection").GetComponent<UIItemCollection>();
+        UIItemCollection _uiItemCollection = GameObject.FindGameObjectWithTag(TAG_UIITEM_COLLECTION).GetComponent<UIItemCollection>();
 
         if (prefabID == (int)Items.Bolt && currentTask == Minigame1Tasks.Task1 && _uiItemCollection.SelectedItemType == Items.CrossSocketWrench)
         {
@@ -101,7 +105,8 @@ public class CarTask1 : CarTask
                 }
                 else
                 {
-                    Debug.Log("Je moet ze kruislinks erin schroeven met de momentsleutel");
+                    LoadTasks loadTasks = GameObject.FindGameObjectWithTag(TAG_LOAD_BUTTON).GetComponent<LoadTasks>();
+                    loadTasks.SetTaskTip("Je moet ze kruislinks erin schroeven met de momentsleutel");
                 }
             }
         }
@@ -124,7 +129,7 @@ public class CarTask1 : CarTask
         else if (prefabItem.ItemType == Items.Wheel && currentTask == Minigame1Tasks.Task3)
         {
             _mainWheel.SetActive(true);
-            GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().UseItem(Items.Wheel, uiItem);
+            GameObject.FindGameObjectWithTag(TAG_PLAYER).GetComponent<Player>().UseItem(Items.Wheel, uiItem);
             PlaceWheel();
         }
     } // can be moved to CarTask base class

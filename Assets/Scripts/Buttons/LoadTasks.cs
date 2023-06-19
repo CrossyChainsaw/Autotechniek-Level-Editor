@@ -13,10 +13,9 @@ public class LoadTasks : MonoBehaviour
 
     public Button LoadButton;
     public List<CarTask> TaskList { get; private set; }
-
+    public TextMeshProUGUI TaskTips;
     TextMeshProUGUI TaskName;
     TextMeshProUGUI TaskDescription;
-    TextMeshProUGUI TaskTips;
 
     void Start()
     {
@@ -57,8 +56,12 @@ public class LoadTasks : MonoBehaviour
     }
     public void Finish()
     {
-        TaskName.text = "Je hebt alle taked voltooid";
+        TaskName.text = "Je hebt alle taken voltooid";
         TaskDescription.text = "";
         TaskTips.text = "";
+    }
+    public void SetTaskTip(string s)
+    {
+        TaskTips.text = s;
     }
 }

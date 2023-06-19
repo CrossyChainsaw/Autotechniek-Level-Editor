@@ -16,12 +16,15 @@ public class Player : MonoBehaviour
     public LayerMask stopMovementLayer; // StopMovementLayer is the layer that stops the player form moving, for example the blue blocks in the game contain this layey. Same for the black boundaries
     public List<CarTask> TaskList { get; private set; } // a list with all assigned cartasks, these get loaded from a data source (currently textfile)
 
+    LoadTasks _loadTasks;
     Inventory _inventory; // player inventory
 
     private void Start()
     {
         _inventory = new Inventory();
-        TaskList = GameObject.FindGameObjectWithTag(TAG_LOAD_BUTTON).GetComponent<LoadTasks>().TaskList; // load tasks form LoadTasks (which loads it from datafile)
+        _loadTasks = GameObject.FindGameObjectWithTag(TAG_LOAD_BUTTON).GetComponent<LoadTasks>();
+        TaskList = _loadTasks.TaskList; // load tasks form LoadTasks (which loads it from datafile)
+
         //TaskList = Data.CarTaskData.LoadCarTasksFromTextFile(); // load cartasks from datafile
         //TaskList = GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().TaskList; // HARDCODE: Assign all tasks to player, only use for testing (this is used in itch)
     }
@@ -75,14 +78,16 @@ public class Player : MonoBehaviour
     }
     void PrintRequiredTools()
     {
-        print("You didn't collect the required tools. Required Tools: ");
+        string taskTip = "Je hebt de volgende tools niet opgepakt: ";
         foreach (var item in TaskList[0].RequiredTools)
         {
             if (!_inventory.ItemList.Contains(item)) // if you didn't collect the required tool, print it, again preferably put it in UI for better gameplay
             {
-                Debug.Log(item);
+                taskTip += item.ToString();
+                taskTip += ", ";
             }
         }
+        _loadTasks.SetTaskTip(taskTip);
     } // try to show this on the screen
     void LoadInNextTask()
     {
