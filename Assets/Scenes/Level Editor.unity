@@ -323,8 +323,6 @@ GameObject:
   m_Component:
   - component: {fileID: 86307559}
   - component: {fileID: 86307561}
-  - component: {fileID: 86307560}
-  - component: {fileID: 86307562}
   m_Layer: 0
   m_Name: eraser
   m_TagString: Untagged
@@ -352,32 +350,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!61 &86307560
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 86307558}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!212 &86307561
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -430,18 +402,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &86307562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 86307558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14268892c24294343810eca35f801a5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &154115179
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,6 +689,7 @@ GameObject:
   - component: {fileID: 253264908}
   - component: {fileID: 253264907}
   - component: {fileID: 253264906}
+  - component: {fileID: 253264909}
   m_Layer: 0
   m_Name: UI Item - Eraser
   m_TagString: Untagged
@@ -798,15 +759,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Color: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &253264907
@@ -849,6 +810,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 100, y: 100}
   m_EdgeRadius: 0
+--- !u!114 &253264909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253264904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14268892c24294343810eca35f801a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &455871148
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,21 +876,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadSaveButtonClick: {fileID: 455871151}
-  prefabList:
-  - {fileID: 3494191256735564902, guid: f69af23a3cf24ab4bbbd3da79d81513e, type: 3}
-  - {fileID: 6660644573074121323, guid: 5dcecd6e6c0311a4a8945e3af78a5fe9, type: 3}
-  - {fileID: 3309287126583857680, guid: 58d2f77c6e912cc44a06083e2ad9acc6, type: 3}
-  - {fileID: 5861653438422162116, guid: 29a1575e18f221e46b9103086792892b, type: 3}
-  - {fileID: 580083337000817061, guid: e9580ffa336c9434386a5466510a6dc6, type: 3}
-  - {fileID: 7458875396578858102, guid: 665a44637c50ef24599dee632b52aeeb, type: 3}
-  - {fileID: 7788975026583171870, guid: 40d64e66ae284d54990f60e1feef83e9, type: 3}
-  - {fileID: 8608598383620652665, guid: f79c6a446b9b92940a8617894516e680, type: 3}
-  - {fileID: 7362640874217712864, guid: 5f8a35c0cb505934fb0b7b4e029c6578, type: 3}
-  - {fileID: 580083337000817061, guid: 999d6d64278c8fd4a9f351da4dac5312, type: 3}
-  - {fileID: 4473645201323808584, guid: 842958ee60a1bdb49b2149e2a0158c1e, type: 3}
-  - {fileID: 0}
-  - {fileID: 1388098759956508385, guid: 18bcd838011596f40afdd5899f526ab5, type: 3}
-  - {fileID: 1388098759956508385, guid: ebc42b0b60eb2d344a2275a593eebbbe, type: 3}
   CarTaskButtonCollection: {fileID: 2095033983}
 --- !u!114 &455871151
 MonoBehaviour:

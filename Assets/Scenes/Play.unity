@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 3352391}
   - component: {fileID: 3352392}
   m_Layer: 3
-  m_Name: RightWall
+  m_Name: RightBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 27499774}
   - component: {fileID: 27499775}
   m_Layer: 3
-  m_Name: TopWall
+  m_Name: TopBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -388,7 +388,7 @@ GameObject:
   - component: {fileID: 33397869}
   - component: {fileID: 33397870}
   m_Layer: 3
-  m_Name: BottomWall
+  m_Name: BottomBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2800,7 +2800,7 @@ GameObject:
   - component: {fileID: 819565809}
   - component: {fileID: 819565810}
   m_Layer: 3
-  m_Name: LeftWall
+  m_Name: LeftBoundary
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4102,21 +4102,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadSaveButtonClick: {fileID: 1367334304}
-  prefabList:
-  - {fileID: 3494191256735564902, guid: f69af23a3cf24ab4bbbd3da79d81513e, type: 3}
-  - {fileID: 6660644573074121323, guid: 5dcecd6e6c0311a4a8945e3af78a5fe9, type: 3}
-  - {fileID: 3309287126583857680, guid: 58d2f77c6e912cc44a06083e2ad9acc6, type: 3}
-  - {fileID: 5861653438422162116, guid: 29a1575e18f221e46b9103086792892b, type: 3}
-  - {fileID: 580083337000817061, guid: e9580ffa336c9434386a5466510a6dc6, type: 3}
-  - {fileID: 7458875396578858102, guid: 665a44637c50ef24599dee632b52aeeb, type: 3}
-  - {fileID: 7788975026583171870, guid: 40d64e66ae284d54990f60e1feef83e9, type: 3}
-  - {fileID: 8608598383620652665, guid: f79c6a446b9b92940a8617894516e680, type: 3}
-  - {fileID: 7362640874217712864, guid: 5f8a35c0cb505934fb0b7b4e029c6578, type: 3}
-  - {fileID: 580083337000817061, guid: 999d6d64278c8fd4a9f351da4dac5312, type: 3}
-  - {fileID: 4473645201323808584, guid: 842958ee60a1bdb49b2149e2a0158c1e, type: 3}
-  - {fileID: 7458875396578858102, guid: 665a44637c50ef24599dee632b52aeeb, type: 3}
-  - {fileID: 1388098759956508385, guid: 18bcd838011596f40afdd5899f526ab5, type: 3}
-  - {fileID: 1388098759956508385, guid: ebc42b0b60eb2d344a2275a593eebbbe, type: 3}
   CarTaskButtonCollection: {fileID: 0}
 --- !u!114 &1367334308
 MonoBehaviour:

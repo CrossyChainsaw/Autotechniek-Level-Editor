@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LoadSaveButton : MonoBehaviour // this class is a mess, inside the application you manually have to give all prefabs (its hardcoded), try to remove that from the application and make it dynamic
+public class LoadSaveButton : MonoBehaviour 
 {
     public Button loadSaveButtonClick; // the load button
     public CarTaskButtonCollection CarTaskButtonCollection;
@@ -31,20 +31,22 @@ public class LoadSaveButton : MonoBehaviour // this class is a mess, inside the 
     }
     void LoadObjectsFromSave()
     {
+        // parent of all loaded objects
+        GameObject loadedObjects = new GameObject();
+        loadedObjects.name = "Dynamically Loaded Objects";
+
         List<(int id, int x, int y)> data = Data.GridData.LoadAsTupleList();
         while (data.Count > 0)
         {
-            Debug.Log("Finding Prefab by ID");
             GameObject prefab = FindPrefabByID(data[0].id);
-            Debug.Log("Found ID: " + data[0].id);
-            Debug.Log("Found prefab: " + prefab);
-            Vector3 pos = new Vector3(data[0].x, data[0].y);
-            Instantiate(prefab, pos, new Quaternion());
-            data.RemoveAt(0);
+            GameObject instantiatedPrefab = Instantiate(prefab, new Vector3(data[0].x, data[0].y), new Quaternion());
+            instantiatedPrefab.transform.parent = loadedObjects.transform;
+            data.RemoveAt(0); // remove first data entry so we can keep on getting the first one till its empty
         }
     }
     GameObject FindPrefabByID(int id)
     {
+        Debug.Log("Finding prefab with ID = " + id);
         GameObject correctPrefab = null;
         foreach (GameObject prefab in prefabList)
         {
@@ -56,9 +58,9 @@ public class LoadSaveButton : MonoBehaviour // this class is a mess, inside the 
                 break;
             }
         }
+        Debug.Log("Found prefab: " + correctPrefab);
         return correctPrefab;
-    } // we can find prefabs by id because of the hardcoded prefabList
-
+    }
     void LoadSelectedTasks()
     {
         List<CarTask> selectedTasks = Data.CarTaskData.LoadCarTasksFromTextFile();
