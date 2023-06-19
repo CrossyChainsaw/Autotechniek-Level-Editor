@@ -9,11 +9,13 @@ public class Player : MonoBehaviour
 {
     const string TAG_LOAD_BUTTON = "LoadSaveButton";
     const string TAG_MAIN_CAMERA = "MainCamera";
+
     public float moveSpeed; // amount of tiles player moves, setted in runtime
     public Transform movePoint; // player transform
     public SpriteRenderer spriteRenderer; // player sprite
     public LayerMask stopMovementLayer; // StopMovementLayer is the layer that stops the player form moving, for example the blue blocks in the game contain this layey. Same for the black boundaries
     public List<CarTask> TaskList { get; private set; } // a list with all assigned cartasks, these get loaded from a data source (currently textfile)
+
     Inventory _inventory; // player inventory
 
     private void Start()
@@ -84,7 +86,15 @@ public class Player : MonoBehaviour
     } // try to show this on the screen
     void LoadInNextTask()
     {
-        GameObject.FindGameObjectWithTag(TAG_LOAD_BUTTON).GetComponent<LoadTasks>().LoadInTask(TaskList[0]);
+        LoadTasks loadTasks = GameObject.FindGameObjectWithTag(TAG_LOAD_BUTTON).GetComponent<LoadTasks>();
+        if (loadTasks.TaskList.Count > 0)
+        {
+            GameObject.FindGameObjectWithTag(TAG_LOAD_BUTTON).GetComponent<LoadTasks>().LoadInTask(TaskList[0]); 
+        }
+        else
+        {
+            loadTasks.Finish();
+        }
     }
     public void UseItem(Items item, UIItem uiItem)
     {
