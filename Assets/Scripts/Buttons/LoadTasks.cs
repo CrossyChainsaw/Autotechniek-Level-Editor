@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,15 +7,31 @@ using UnityEngine.UI;
 
 public class LoadTasks : MonoBehaviour
 {
-    public Button LoadTasksButtonClick;
+    const string TAG_TASK_NAME = "TaskName";
+    const string TAG_TASK_DESCRIPTION = "TaskDescription";
+    const string TAG_TASK_TIPS = "TaskTips";
+
+    public Button LoadButton;
     public List<CarTask> TaskList { get; private set; }
+    
+    TextMeshProUGUI _taskTips;
+    TextMeshProUGUI _taskName;
+    TextMeshProUGUI _taskDescription;
 
     void Start()
     {
         GameModeManager.SetGamemode(Gamemodes.Play);
         TaskList = Data.CarTaskData.LoadCarTasksFromTextFile(); // load cartasks from textfile
-        //TaskList = new CarTaskCollection().AllTasks; // HARDCODE: Assign all tasks to player, only use for testing (this is used in the itch version)
-        LoadTasksButtonClick.GetComponent<Button>().onClick.AddListener(ButtonClick);
+        //TaskList = new CarTaskCollection().AllTasks; // HARDCODE: Assign all tasks to player, only use for testing (this is used in the WEBGL build on itch.io)
+        LoadButton.GetComponent<Button>().onClick.AddListener(ButtonClick);
+        FindTextBoxes();
+
+        void FindTextBoxes()
+        {
+            _taskName = GameObject.FindGameObjectWithTag(TAG_TASK_NAME).GetComponent<TextMeshProUGUI>();
+            _taskDescription = GameObject.FindGameObjectWithTag(TAG_TASK_DESCRIPTION).GetComponent<TextMeshProUGUI>();
+            _taskTips = GameObject.FindGameObjectWithTag(TAG_TASK_TIPS).GetComponent<TextMeshProUGUI>();
+        }
     }
     void ButtonClick()
     {
@@ -22,20 +39,30 @@ public class LoadTasks : MonoBehaviour
     }
     void LoadInFirstTask()
     {
-        TextMeshProUGUI TaskName = GameObject.FindGameObjectWithTag("TaskName").GetComponent<TextMeshProUGUI>();
-        TaskName.text = TaskList[0].Name;
-        TextMeshProUGUI TaskDescription = GameObject.FindGameObjectWithTag("TaskDescription").GetComponent<TextMeshProUGUI>();
-        TaskDescription.text = TaskList[0].Description;
-        TextMeshProUGUI TaskTips = GameObject.FindGameObjectWithTag("TaskTips").GetComponent<TextMeshProUGUI>();
-        TaskTips.text = "";
-    } // tip: watchout for removing tags, i check on tagnames quite a lot
+        _taskName.text = TaskList[0].Name;
+        _taskDescription.text = TaskList[0].Description;
+        _taskTips.text = "";
+    }
     public void LoadInTask(CarTask c)
     {
-        TextMeshProUGUI TaskName = GameObject.FindGameObjectWithTag("TaskName").GetComponent<TextMeshProUGUI>();
-        TaskName.text = c.Name;
-        TextMeshProUGUI TaskDescription = GameObject.FindGameObjectWithTag("TaskDescription").GetComponent<TextMeshProUGUI>();
-        TaskDescription.text = c.Description;
-        TextMeshProUGUI TaskTips = GameObject.FindGameObjectWithTag("TaskTips").GetComponent<TextMeshProUGUI>();
-        TaskTips.text = "";
+        _taskName.text = c.Name;
+        _taskDescription.text = c.Description;
+        _taskTips.text = "";
+    }
+    public void ClearTextBoxes()
+    {
+        _taskName.text = "";
+        _taskDescription.text = "";
+        _taskTips.text = "";
+    }
+    public void Finish()
+    {
+        _taskName.text = "Je hebt alle taken voltooid";
+        _taskDescription.text = "";
+        _taskTips.text = "";
+    }
+    public void SetTaskTip(string s)
+    {
+        _taskTips.text = s;
     }
 }
