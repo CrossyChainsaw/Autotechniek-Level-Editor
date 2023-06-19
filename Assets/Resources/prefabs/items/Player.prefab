@@ -48,10 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fc8c03a403b9e438b037d095107d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 100
-  movePoint: {fileID: 3494191256735564903}
-  spriteRenderer: {fileID: 0}
-  stopMovementLayer:
+  MoveSpeed: 100
+  MovePoint: {fileID: 3494191256735564903}
+  StopMovementLayer:
     serializedVersion: 2
     m_Bits: 8
 --- !u!114 &7084364766392532658

@@ -13,9 +13,10 @@ public class LoadTasks : MonoBehaviour
 
     public Button LoadButton;
     public List<CarTask> TaskList { get; private set; }
-    public TextMeshProUGUI TaskTips;
-    TextMeshProUGUI TaskName;
-    TextMeshProUGUI TaskDescription;
+    
+    TextMeshProUGUI _taskTips;
+    TextMeshProUGUI _taskName;
+    TextMeshProUGUI _taskDescription;
 
     void Start()
     {
@@ -27,9 +28,9 @@ public class LoadTasks : MonoBehaviour
 
         void FindTextBoxes()
         {
-            TaskName = GameObject.FindGameObjectWithTag(TAG_TASK_NAME).GetComponent<TextMeshProUGUI>();
-            TaskDescription = GameObject.FindGameObjectWithTag(TAG_TASK_DESCRIPTION).GetComponent<TextMeshProUGUI>();
-            TaskTips = GameObject.FindGameObjectWithTag(TAG_TASK_TIPS).GetComponent<TextMeshProUGUI>();
+            _taskName = GameObject.FindGameObjectWithTag(TAG_TASK_NAME).GetComponent<TextMeshProUGUI>();
+            _taskDescription = GameObject.FindGameObjectWithTag(TAG_TASK_DESCRIPTION).GetComponent<TextMeshProUGUI>();
+            _taskTips = GameObject.FindGameObjectWithTag(TAG_TASK_TIPS).GetComponent<TextMeshProUGUI>();
         }
     }
     void ButtonClick()
@@ -38,30 +39,30 @@ public class LoadTasks : MonoBehaviour
     }
     void LoadInFirstTask()
     {
-        TaskName.text = TaskList[0].Name;
-        TaskDescription.text = TaskList[0].Description;
-        TaskTips.text = "";
+        _taskName.text = TaskList[0].Name;
+        _taskDescription.text = TaskList[0].Description;
+        _taskTips.text = "";
     }
     public void LoadInTask(CarTask c)
     {
-        TaskName.text = c.Name;
-        TaskDescription.text = c.Description;
-        TaskTips.text = "";
+        _taskName.text = c.Name;
+        _taskDescription.text = c.Description;
+        _taskTips.text = "";
     }
     public void ClearTextBoxes()
     {
-        TaskName.text = "";
-        TaskDescription.text = "";
-        TaskTips.text = "";
+        _taskName.text = "";
+        _taskDescription.text = "";
+        _taskTips.text = "";
     }
     public void Finish()
     {
-        TaskName.text = "Je hebt alle taken voltooid";
-        TaskDescription.text = "";
-        TaskTips.text = "";
+        _taskName.text = "Je hebt alle taken voltooid";
+        _taskDescription.text = "";
+        _taskTips.text = "";
     }
     public void SetTaskTip(string s)
     {
-        TaskTips.text = s;
+        _taskTips.text = s;
     }
 }

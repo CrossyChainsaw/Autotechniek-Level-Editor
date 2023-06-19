@@ -2649,7 +2649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be478aff5c10e9047b51786fe012c2db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restartButton: {fileID: 804673664}
+  ResetButton: {fileID: 0}
 --- !u!23 &804673663
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4116,6 +4116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadButton: {fileID: 1367334304}
+  TaskTips: {fileID: 0}
 --- !u!4 &1427680893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3913935573792214305, guid: f79c6a446b9b92940a8617894516e680, type: 3}

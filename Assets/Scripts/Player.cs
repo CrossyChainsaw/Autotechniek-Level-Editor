@@ -10,10 +10,9 @@ public class Player : MonoBehaviour
     const string TAG_LOAD_BUTTON = "LoadSaveButton";
     const string TAG_MAIN_CAMERA = "MainCamera";
 
-    public float moveSpeed; // amount of tiles player moves, setted in runtime
-    public Transform movePoint; // player transform
-    public SpriteRenderer spriteRenderer; // player sprite
-    public LayerMask stopMovementLayer; // StopMovementLayer is the layer that stops the player form moving, for example the blue blocks in the game contain this layey. Same for the black boundaries
+    public float MoveSpeed; // amount of tiles player moves, setted in runtime
+    public Transform MovePoint; // player transform
+    public LayerMask StopMovementLayer; // StopMovementLayer is the layer that stops the player form moving, for example the blue blocks in the game contain this layey. Same for the black boundaries
     public List<CarTask> TaskList { get; private set; } // a list with all assigned cartasks, these get loaded from a data source (currently textfile)
 
     LoadTasks _loadTasks;
@@ -134,7 +133,7 @@ public class Player : MonoBehaviour
             {
                 FaceRight();
                 // Check if the space you try to move in contains an object with the layer "StopMovement" (Or what ever the variable stopMovementLayer has been assigned to)
-                if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(moveSpeed, 0f, 0f), float.MinValue, stopMovementLayer))
+                if (!Physics2D.OverlapCircle(MovePoint.position + new Vector3(MoveSpeed, 0f, 0f), float.MinValue, StopMovementLayer))
                 {
                     MoveForward();
                 }
@@ -142,7 +141,7 @@ public class Player : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
                 FaceLeft();
-                if (!Physics2D.OverlapCircle(movePoint.position - new Vector3(moveSpeed, 0f, 0f), float.MinValue, stopMovementLayer))
+                if (!Physics2D.OverlapCircle(MovePoint.position - new Vector3(MoveSpeed, 0f, 0f), float.MinValue, StopMovementLayer))
                 {
                     MoveForward();
                 }
@@ -150,7 +149,7 @@ public class Player : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
             {
                 FaceDown();
-                if (!Physics2D.OverlapCircle(movePoint.position - new Vector3(0f, moveSpeed, 0f), float.MinValue, stopMovementLayer))
+                if (!Physics2D.OverlapCircle(MovePoint.position - new Vector3(0f, MoveSpeed, 0f), float.MinValue, StopMovementLayer))
                 {
                     MoveForward();
                 }
@@ -158,7 +157,7 @@ public class Player : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
             {
                 FaceUp();
-                if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, moveSpeed, 0f), float.MinValue, stopMovementLayer))
+                if (!Physics2D.OverlapCircle(MovePoint.position + new Vector3(0f, MoveSpeed, 0f), float.MinValue, StopMovementLayer))
                 {
                     MoveForward();
                 }
@@ -167,36 +166,36 @@ public class Player : MonoBehaviour
     }
     void MoveUp()
     {
-        movePoint.position += new Vector3(0f, moveSpeed, 0f);
+        MovePoint.position += new Vector3(0f, MoveSpeed, 0f);
     }
     void MoveRight()
     {
-        movePoint.position += new Vector3(moveSpeed, 0f, 0f);
+        MovePoint.position += new Vector3(MoveSpeed, 0f, 0f);
     }
     void MoveDown()
     {
-        movePoint.position -= new Vector3(0f, moveSpeed, 0f);
+        MovePoint.position -= new Vector3(0f, MoveSpeed, 0f);
     }
     void MoveLeft()
     {
-        movePoint.position -= new Vector3(moveSpeed, 0f, 0f);
+        MovePoint.position -= new Vector3(MoveSpeed, 0f, 0f);
     }
     /// <summary>Makes the player move the direction it's facing a tile</summary>
     void MoveForward()
     {
-        if (movePoint.rotation.z == 0)
+        if (MovePoint.rotation.z == 0)
         {
             MoveUp();
         }
-        else if (Math.Round(movePoint.rotation.w, 2) == -0.71)
+        else if (Math.Round(MovePoint.rotation.w, 2) == -0.71)
         {
             MoveRight();
         }
-        else if (movePoint.rotation.z == 1)
+        else if (MovePoint.rotation.z == 1)
         {
             MoveDown();
         }
-        else if (Math.Round(movePoint.rotation.w, 2) == 0.71)
+        else if (Math.Round(MovePoint.rotation.w, 2) == 0.71)
         {
             MoveLeft();
         }
@@ -205,18 +204,18 @@ public class Player : MonoBehaviour
     // Directions
     void FaceUp()
     {
-        movePoint.rotation = Quaternion.Euler(movePoint.rotation.x, movePoint.rotation.y, 0f);
+        MovePoint.rotation = Quaternion.Euler(MovePoint.rotation.x, MovePoint.rotation.y, 0f);
     }
     void FaceRight()
     {
-        movePoint.rotation = Quaternion.Euler(movePoint.rotation.x, movePoint.rotation.y, 270f);
+        MovePoint.rotation = Quaternion.Euler(MovePoint.rotation.x, MovePoint.rotation.y, 270f);
     }
     void FaceDown()
     {
-        movePoint.rotation = Quaternion.Euler(movePoint.rotation.x, movePoint.rotation.y, 180f);
+        MovePoint.rotation = Quaternion.Euler(MovePoint.rotation.x, MovePoint.rotation.y, 180f);
     }
     void FaceLeft()
     {
-        movePoint.rotation = Quaternion.Euler(movePoint.rotation.x, movePoint.rotation.y, 90f);
+        MovePoint.rotation = Quaternion.Euler(MovePoint.rotation.x, MovePoint.rotation.y, 90f);
     }
 }

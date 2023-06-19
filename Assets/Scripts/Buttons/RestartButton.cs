@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class RestartButton : MonoBehaviour // this button just reloads the scene
 {
-	public Button restartButton;
+	public Button ResetButton;
 
 	void Start()
 	{
-		Button btn = restartButton.GetComponent<Button>();
+		Button btn = ResetButton.GetComponent<Button>();
 		btn.onClick.AddListener(ButtonClick);
 	}
 

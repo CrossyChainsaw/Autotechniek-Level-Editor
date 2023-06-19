@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 public class SaveButtonClick : MonoBehaviour // i never really made this, everything gets saved automatically
 {
-	public Button saveButton;
+	public Button SaveButton;
 
 	void Start()
 	{
-		Button btn = saveButton.GetComponent<Button>();
+		Button btn = SaveButton.GetComponent<Button>();
 		btn.onClick.AddListener(Save);
 	}
 	void Save()
