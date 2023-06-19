@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour // player has an inventory (an instance of this object)
 {
+    const string TAG_UIITEM_COLLECTION = "UIItemCollection";
     public List<Items> ItemList { get; private set; } // the items you have
     public Inventory()
     {
@@ -18,7 +19,7 @@ public class Inventory : MonoBehaviour // player has an inventory (an instance o
         {
             // Create itemslot at the correct place
             GameObject itemSlot = new GameObject("itemSlot", typeof(RectTransform));
-            itemSlot.transform.parent = GameObject.FindGameObjectWithTag("UIItemCollection").transform;
+            itemSlot.transform.parent = GameObject.FindGameObjectWithTag(TAG_UIITEM_COLLECTION).transform;
 
             // Add UI Item component to item slot
             itemSlot.AddComponent<UIItem>();
@@ -33,7 +34,6 @@ public class Inventory : MonoBehaviour // player has an inventory (an instance o
             itemSlot_BoxCollider2D.size = new Vector2(100, 100);
 
             // prefab object
-            Debug.Log("item.ItemType.ToString(): " + item.ItemType.ToString());
             GameObject prefab = Resources.Load("prefabs/items/" + item.ItemType.ToString()) as GameObject; // empty for some reason
             GameObject objectWithPrefab = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
             objectWithPrefab.transform.parent = itemSlot.transform;

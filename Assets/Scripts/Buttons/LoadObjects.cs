@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LoadSaveButton : MonoBehaviour 
+public class LoadObjects : MonoBehaviour 
 {
-    public Button loadSaveButtonClick; // the load button
+    public Button LoadButton; // the load button
     public CarTaskButtonCollection CarTaskButtonCollection;
     GameObject[] prefabList;
     void Start()
     {
-        Button btn = loadSaveButtonClick.GetComponent<Button>();
+        Button btn = LoadButton.GetComponent<Button>();
         btn.onClick.AddListener(ButtonClick); // assign click event to the button
         prefabList = Resources.LoadAll<GameObject>("prefabs/items");
     }

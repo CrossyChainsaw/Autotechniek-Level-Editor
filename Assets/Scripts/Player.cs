@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    const string TAG_LOAD_BUTTON = "LoadSaveButton";
+    const string TAG_MAIN_CAMERA = "MainCamera";
     public float moveSpeed; // amount of tiles player moves, setted in runtime
     public Transform movePoint; // player transform
     public SpriteRenderer spriteRenderer; // player sprite
@@ -17,7 +19,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _inventory = new Inventory();
-        TaskList = Data.CarTaskData.LoadCarTasksFromTextFile(); // load cartasks from datasource
+        TaskList = GameObject.FindGameObjectWithTag(TAG_LOAD_BUTTON).GetComponent<LoadTasks>().TaskList; // load tasks form LoadTasks (which loads it from datafile)
+        //TaskList = Data.CarTaskData.LoadCarTasksFromTextFile(); // load cartasks from datafile
         //TaskList = GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().TaskList; // HARDCODE: Assign all tasks to player, only use for testing (this is used in itch)
     }
     void Update()
@@ -57,7 +60,7 @@ public class Player : MonoBehaviour
     }
     void CameraBackToPlaySection()
     {
-        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayScene>().SwitchToPlayCam();
+        GameObject.FindGameObjectWithTag(TAG_MAIN_CAMERA).GetComponent<PlayScene>().SwitchToPlayCam();
     } // after a minigame, this method returns the camera to the original position.
 
     // CarTask/Items
@@ -81,7 +84,7 @@ public class Player : MonoBehaviour
     } // try to show this on the screen
     void LoadInNextTask()
     {
-        GameObject.FindGameObjectWithTag("LoadSaveButton").GetComponent<LoadTasks>().LoadInTask(TaskList[0]);
+        GameObject.FindGameObjectWithTag(TAG_LOAD_BUTTON).GetComponent<LoadTasks>().LoadInTask(TaskList[0]);
     }
     public void UseItem(Items item, UIItem uiItem)
     {

@@ -3980,7 +3980,7 @@ GameObject:
   - component: {fileID: 1367334307}
   - component: {fileID: 1367334308}
   m_Layer: 5
-  m_Name: LoadSaveButton
+  m_Name: LoadButton
   m_TagString: LoadSaveButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4101,7 +4101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f691317a2fab80d48bb0f449cc1b1b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadSaveButtonClick: {fileID: 1367334304}
+  LoadButton: {fileID: 1367334304}
   CarTaskButtonCollection: {fileID: 0}
 --- !u!114 &1367334308
 MonoBehaviour:
@@ -4115,7 +4115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbc9192c1135124e8c91b61d71cd1e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadTasksButtonClick: {fileID: 1367334304}
+  LoadButton: {fileID: 1367334304}
 --- !u!4 &1427680893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3913935573792214305, guid: f79c6a446b9b92940a8617894516e680, type: 3}

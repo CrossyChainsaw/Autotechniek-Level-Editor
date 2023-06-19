@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    const string LEVEL_EDITOR_SCENE = "Level Editor"; // same problem
+    const string PLAY_SCENE = "Play"; // You can probably improve this by using tags or idk what you can do for scenes
     Text textObject;
     bool isHovering;
-    const string PLAY_SCENE = "Play"; // You can probably improve this by using tags or idk what you can do for scenes
-    const string LEVEL_EDITOR_SCENE = "Level Editor"; // same problem
 
     void Start()
     {

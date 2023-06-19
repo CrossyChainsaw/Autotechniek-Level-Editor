@@ -836,7 +836,7 @@ GameObject:
   - component: {fileID: 455871151}
   - component: {fileID: 455871150}
   m_Layer: 5
-  m_Name: LoadSaveButton
+  m_Name: LoadButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -875,7 +875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f691317a2fab80d48bb0f449cc1b1b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadSaveButtonClick: {fileID: 455871151}
+  LoadButton: {fileID: 455871151}
   CarTaskButtonCollection: {fileID: 2095033983}
 --- !u!114 &455871151
 MonoBehaviour:
