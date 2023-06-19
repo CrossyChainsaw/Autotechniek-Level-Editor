@@ -12,7 +12,7 @@ public class UIItemCollection : MonoBehaviour // uiitemcollection is the collect
     UIItem _currentUIItem = null;
     UIItem _previousUIItem = null;
     bool _firstTime = false; // use this to check if its the first time pressing an uiitem, if it is the first time, it doesn't try to delete border on the previous uititem because there is no previous
-    
+
     private void Start()
     {
         Debug.Log(GameModeManager.Gamemode);
@@ -76,12 +76,14 @@ public class UIItemCollection : MonoBehaviour // uiitemcollection is the collect
     {
         DeselectPreviousItem();
         DeselectEraser();
-        _selectedItem = prefab.GetComponent<Item>();
-        SelectedPrefab = prefab;
+        if (prefab != null)
+        {
+            _selectedItem = prefab.GetComponent<Item>();
+            SelectedPrefab = prefab;
+            Debug.Log("Selected Item/Prefab: " + prefab.ToString());
+            Debug.Log(prefab.GetComponent<Item>().ItemType);
+        } // if it is null you clicker on the eraser probably
         _previousUIItem = _currentUIItem;
-
-        Debug.Log("Selected Item/Prefab: " + prefab.ToString());
-        Debug.Log(prefab.GetComponent<Item>().ItemType);
     }
     public void SelectEraser()
     {
