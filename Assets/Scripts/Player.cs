@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public Transform movePoint; // player transform
     public SpriteRenderer spriteRenderer; // player sprite
     public LayerMask stopMovementLayer; // StopMovementLayer is the layer that stops the player form moving, for example the blue blocks in the game contain this layey. Same for the black boundaries
-    public List<CarTask> TaskList { get; private set; } // a list with all assigned cartasks. these get loaded from a data source (currently textfile)
+    public List<CarTask> TaskList { get; private set; } // a list with all assigned cartasks, these get loaded from a data source (currently textfile)
     Inventory _inventory; // player inventory
 
     private void Start()
